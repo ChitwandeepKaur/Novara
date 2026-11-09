@@ -8,6 +8,8 @@ public struct PlanningEngineTests {
         results["testPrerequisiteFilteringInPlanning"] = testPrerequisiteFilteringInPlanning()
         results["testReplanDetectionAndApproval"] = testReplanDetectionAndApproval()
         results["testDismissReplanPreservesSchedule"] = testDismissReplanPreservesSchedule()
+        results["testCustomPlanGeneration"] = testCustomPlanGeneration()
+        results["testPlanRefinement"] = testPlanRefinement()
         
         return results
     }
@@ -89,6 +91,37 @@ public struct PlanningEngineTests {
         
         PlanningEngine.shared.dismissReplanProposal(in: &plan)
         return plan.pendingReplanProposal == nil
+    }
+    
+    private static func testCustomPlanGeneration() -> Bool {
+        var passed = false
+        let sema = DispatchSemaphore(value: 0)
+        Task {
+            if let plan = try? await LocalDeterministicAIService.shared.generateCustomPlan(from: "Train for a marathon in 6 months", timelineMonths: 6) {
+                if plan.category == .fitness && !plan.subQuests.isEmpty && !plan.dailyQuests.isEmpty && plan.subQuests.count >= 2 {
+                    passed = true
+                }
+            }
+            sema.signal()
+        }
+        sema.wait()
+        return passed
+    }
+    
+    private static func testPlanRefinement() -> Bool {
+        var passed = false
+        let sema = DispatchSemaphore(value: 0)
+        Task {
+            if let initial = try? await LocalDeterministicAIService.shared.generateCustomPlan(from: "Learn backend engineering", timelineMonths: 3),
+               let refined = try? await LocalDeterministicAIService.shared.refinePlan(current: initial, request: "Add fitness workout routine") {
+                if refined.subQuests.contains(where: { $0.category == .fitness }) && refined.priorityAllocation.fitnessWeight > initial.priorityAllocation.fitnessWeight {
+                    passed = true
+                }
+            }
+            sema.signal()
+        }
+        sema.wait()
+        return passed
     }
 }
 

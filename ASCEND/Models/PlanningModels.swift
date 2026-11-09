@@ -125,3 +125,125 @@ public struct DailyPlan: Identifiable, Codable, Equatable, Sendable {
     }
 }
 
+public struct SubQuestDraft: Identifiable, Codable, Equatable, Sendable {
+    public var id: UUID
+    public var title: String
+    public var description: String
+    public var completionConditionDescription: String
+    public var category: QuestCategory
+    public var completionBonusXP: Int
+    public var linkedSkillName: String
+    
+    public init(
+        id: UUID = UUID(),
+        title: String,
+        description: String = "",
+        completionConditionDescription: String = "Complete all associated milestones",
+        category: QuestCategory = .career,
+        completionBonusXP: Int = 300,
+        linkedSkillName: String = "Craftsmanship"
+    ) {
+        self.id = id
+        self.title = title
+        self.description = description
+        self.completionConditionDescription = completionConditionDescription
+        self.category = category
+        self.completionBonusXP = completionBonusXP
+        self.linkedSkillName = linkedSkillName
+    }
+}
+
+public struct DailyQuestDraft: Identifiable, Codable, Equatable, Sendable {
+    public var id: UUID
+    public var name: String
+    public var category: QuestCategory
+    public var priority: QuestPriority
+    public var estimatedDurationMinutes: Int
+    
+    public init(
+        id: UUID = UUID(),
+        name: String,
+        category: QuestCategory = .career,
+        priority: QuestPriority = .high,
+        estimatedDurationMinutes: Int = 60
+    ) {
+        self.id = id
+        self.name = name
+        self.category = category
+        self.priority = priority
+        self.estimatedDurationMinutes = estimatedDurationMinutes
+    }
+}
+
+public struct SideHabitDraft: Identifiable, Codable, Equatable, Sendable {
+    public var id: UUID
+    public var title: String
+    public var category: QuestCategory
+    
+    public init(
+        id: UUID = UUID(),
+        title: String,
+        category: QuestCategory = .fitness
+    ) {
+        self.id = id
+        self.title = title
+        self.category = category
+    }
+}
+
+public struct FutureSelfStageDraft: Identifiable, Codable, Equatable, Sendable {
+    public var id: String
+    public var stageIndex: Int
+    public var title: String
+    public var tagline: String
+    public var milestoneRequirement: String
+    
+    public init(
+        id: String,
+        stageIndex: Int,
+        title: String,
+        tagline: String,
+        milestoneRequirement: String
+    ) {
+        self.id = id
+        self.stageIndex = stageIndex
+        self.title = title
+        self.tagline = tagline
+        self.milestoneRequirement = milestoneRequirement
+    }
+}
+
+public struct CustomPlanDraft: Codable, Equatable, Sendable {
+    public var goalTitle: String
+    public var goalDescription: String
+    public var category: QuestCategory
+    public var priorityAllocation: PriorityAllocation
+    public var subQuests: [SubQuestDraft]
+    public var dailyQuests: [DailyQuestDraft]
+    public var sideHabits: [SideHabitDraft]
+    public var futureSelfStages: [FutureSelfStageDraft]
+    public var explanation: String
+    
+    public init(
+        goalTitle: String,
+        goalDescription: String = "",
+        category: QuestCategory = .career,
+        priorityAllocation: PriorityAllocation = PriorityAllocation(careerWeight: 0.8, fitnessWeight: 0.1, selfCareWeight: 0.1),
+        subQuests: [SubQuestDraft] = [],
+        dailyQuests: [DailyQuestDraft] = [],
+        sideHabits: [SideHabitDraft] = [],
+        futureSelfStages: [FutureSelfStageDraft] = [],
+        explanation: String = ""
+    ) {
+        self.goalTitle = goalTitle
+        self.goalDescription = goalDescription
+        self.category = category
+        self.priorityAllocation = priorityAllocation
+        self.subQuests = subQuests
+        self.dailyQuests = dailyQuests
+        self.sideHabits = sideHabits
+        self.futureSelfStages = futureSelfStages
+        self.explanation = explanation
+    }
+}
+

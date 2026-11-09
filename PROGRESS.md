@@ -41,18 +41,21 @@
 
 ### Stage 6: Polish, Onboarding & Settings ✅
 - [x] Implemented First-Launch Onboarding with Career 80/10/10 preset and custom goal flow.
+- [x] Redesigned goal definition flow to feature free-form natural language text input, AI/deterministic custom plan generation, interactive plan review & refinement ("Request Changes"), and direct plan builder ("Build Custom Plan").
+- [x] Added inspiration quick-pill suggestions and target timeline selector (1, 3, 6, 12 months).
+- [x] Implemented plan refinement engine (`LocalDeterministicAIService.refinePlan`) responding to user adjustment requests.
 - [x] Implemented Settings with JSON export/import and data wipe.
 - [x] Added sensory feedback triggers (`HapticService`).
-- [x] Comprehensive automated unit test suite with 24 passing tests (`./Scripts/run_tests.sh`).
+- [x] Comprehensive automated unit test suite with 26 passing tests (`./Scripts/run_tests.sh`).
 - [x] Clean Xcode build configuration and setup instructions in `README.md`.
 
 ---
 
 ## Test Verification Summary
-All 24 automated unit tests pass with zero failures:
+All 26 automated unit tests pass with zero failures:
 - `QuestEngineTests` (6 tests: exclusivity, DAG, cycles, numerical progress, archiving, pausing)
 - `XPEngineTests` (5 tests: level calculation curve, effort caps, deduplication, one-off bonus, transaction log)
-- `PlanningEngineTests` (4 tests: priority budgeting, prerequisite filtering, replan detection & approval, dismissal)
+- `PlanningEngineTests` (6 tests: custom plan generation, plan refinement, priority budgeting, prerequisite filtering, replan detection & approval, dismissal)
 - `SkillEngineTests` (3 tests: node states, level up progression, quest attribution)
 - `FutureSelfEngineTests` (3 tests: milestone gating, XP separation, title rewards)
 - `PersistenceTests` (3 tests: state serialization, export/import roundtrip, wipe)
