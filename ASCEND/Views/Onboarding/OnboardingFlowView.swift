@@ -358,9 +358,9 @@ public struct OnboardingFlowView: View {
         
         // Add initial Daily Tasks
         store.state.dailyQuests = [
-            DailyQuest(name: "Study System Design (Caching & Sharding)", category: .career, priority: .high, estimatedDurationMinutes: 90, subQuestId: sub3.id),
-            DailyQuest(name: "Solve 3 Medium DSA Problems", category: .career, priority: .critical, estimatedDurationMinutes: 60, subQuestId: sub2.id),
-            DailyQuest(name: "Implement Project Auth & API Routes", category: .career, priority: .high, estimatedDurationMinutes: 90, subQuestId: sub1.id),
+            DailyQuest(name: "Study System Design (Caching & Sharding)", subQuestId: sub3.id, category: .career, priority: .high, estimatedDurationMinutes: 90),
+            DailyQuest(name: "Solve 3 Medium DSA Problems", subQuestId: sub2.id, category: .career, priority: .critical, estimatedDurationMinutes: 60),
+            DailyQuest(name: "Implement Project Auth & API Routes", subQuestId: sub1.id, category: .career, priority: .high, estimatedDurationMinutes: 90),
             DailyQuest(name: "Full Body Resistance Workout", category: .fitness, priority: .medium, estimatedDurationMinutes: 45),
             DailyQuest(name: "Nighttime Skincare & Reading", category: .selfCare, priority: .low, estimatedDurationMinutes: 20)
         ]

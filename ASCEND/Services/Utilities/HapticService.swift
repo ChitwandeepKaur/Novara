@@ -54,3 +54,4 @@ public enum ImpactFeedbackStyle: Sendable {
     case rigid
     case soft
 }
+

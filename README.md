@@ -167,3 +167,4 @@ You can run the full automated test suite directly from the command line:
 2. **Daily Effort Cap:** Focused work awards up to the configurable daily cap (360 XP/day) to encourage consistent, healthy progress rather than binge-burnout farming.
 3. **Milestone Integrity:** Future-Self transformations strictly require verified SubQuest deliverables. XP alone will not advance identity stages.
 4. **Anti-Guilt Mechanic:** Days off or missed target dates never strip away earned XP, never demote levels, and never break streaks punitive fashion.
+

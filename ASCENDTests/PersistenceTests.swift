@@ -76,3 +76,4 @@ public struct PersistenceTests {
         return isClean
     }
 }
+

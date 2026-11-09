@@ -36,3 +36,4 @@ public struct GlassCard<Content: View>: View {
             )
     }
 }
+

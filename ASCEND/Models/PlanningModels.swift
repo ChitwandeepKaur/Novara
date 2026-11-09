@@ -124,3 +124,4 @@ public struct DailyPlan: Identifiable, Codable, Equatable, Sendable {
         self.pendingReplanProposal = pendingReplanProposal
     }
 }
+

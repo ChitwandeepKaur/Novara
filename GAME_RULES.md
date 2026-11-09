@@ -102,3 +102,4 @@ Three foundational regions evolve in sync with real player accomplishments:
 - **Priority Allocation:** Weights (e.g. 80% Career / 10% Fitness / 10% Self-care) dictate task recommendation density.
 - **Explainability:** Every scheduled block presents a clear rationale (e.g. *"High priority career milestone with imminent target deadline"*).
 - **Graceful Replanning:** If tasks run over or start late, the engine suggests a revised schedule. It never overwrites without player approval.
+

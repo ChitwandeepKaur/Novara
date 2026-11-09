@@ -106,3 +106,4 @@ public struct QuestEngineTests {
         return bonus == 2500 && updated?.status == .archived && state.avatar.totalCumulativeXP == 1200
     }
 }
+

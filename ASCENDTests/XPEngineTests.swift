@@ -83,3 +83,4 @@ public struct XPEngineTests {
         return state.xpTransactions.count == 2 && hasEffort && hasAchievement
     }
 }
+

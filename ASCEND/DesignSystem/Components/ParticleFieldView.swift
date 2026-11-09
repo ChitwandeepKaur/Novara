@@ -13,10 +13,11 @@ public struct Particle: Identifiable, Sendable {
 public struct ParticleFieldView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     private let particleCount: Int
-    @State private var particles: [Particle] = []
+    @State private var particles: [Particle]
     
     public init(particleCount: Int = 35) {
         self.particleCount = particleCount
+        _particles = State(initialValue: Self.generateParticles(count: particleCount))
     }
     
     public var body: some View {
@@ -51,16 +52,13 @@ public struct ParticleFieldView: View {
                     }
                 }
             }
-            .onAppear {
-                generateParticles()
-            }
         }
         .allowsHitTesting(false)
     }
     
-    private func generateParticles() {
+    private static func generateParticles(count: Int) -> [Particle] {
         var list: [Particle] = []
-        for _ in 0..<particleCount {
+        for _ in 0..<count {
             list.append(Particle(
                 x: CGFloat.random(in: 0...1),
                 y: CGFloat.random(in: 0...1),
@@ -70,6 +68,6 @@ public struct ParticleFieldView: View {
                 hueShift: Double.random(in: 0...1)
             ))
         }
-        self.particles = list
+        return list
     }
 }

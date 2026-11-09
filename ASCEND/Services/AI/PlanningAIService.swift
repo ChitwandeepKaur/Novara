@@ -145,3 +145,4 @@ public final class LocalDeterministicAIService: PlanningAIServiceProtocol {
         return "You have \(behindTasks.count) uncompleted sessions today. Prioritize the highest-leverage deep work task and defer administrative tasks to tomorrow morning."
     }
 }
+

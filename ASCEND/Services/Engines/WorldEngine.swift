@@ -61,3 +61,4 @@ public final class WorldEngine: Sendable {
         state.worldState.activeBridgesCount = 3
     }
 }
+

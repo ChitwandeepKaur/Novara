@@ -59,3 +59,4 @@ public final class FutureSelfEngine: Sendable {
         return newlyUnlockedStage
     }
 }
+

@@ -106,3 +106,4 @@ ASCEND-iOS/
 6. **Offline Autonomy:**
    - All engines are self-contained and execute locally without requiring network connectivity.
    - Optional AI integration conforms to `AIPlanningServiceProtocol`, gracefully falling back to deterministic algorithms when no API key or network is present.
+

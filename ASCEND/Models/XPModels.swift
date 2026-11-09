@@ -52,3 +52,4 @@ public struct XPProgressInfo: Equatable, Sendable {
     public let xpForNextLevel: Int
     public let progressToNextLevel: Double // 0.0 to 1.0
 }
+

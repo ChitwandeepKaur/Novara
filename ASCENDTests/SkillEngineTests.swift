@@ -64,3 +64,4 @@ public struct SkillEngineTests {
         return (updated?.xpContributed ?? 0) > 0
     }
 }
+

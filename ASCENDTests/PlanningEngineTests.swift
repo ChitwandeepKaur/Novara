@@ -91,3 +91,4 @@ public struct PlanningEngineTests {
         return plan.pendingReplanProposal == nil
     }
 }
+
