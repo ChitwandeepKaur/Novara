@@ -6,6 +6,7 @@ public enum NavigationTab: Int, CaseIterable, Identifiable {
     case dailyPlan = 2
     case skills = 3
     case character = 4
+    case challenge = 5
     
     public var id: Int { rawValue }
     
@@ -16,6 +17,7 @@ public enum NavigationTab: Int, CaseIterable, Identifiable {
         case .dailyPlan: return "Daily Plan"
         case .skills: return "Skills"
         case .character: return "Character"
+        case .challenge: return "75 Days"
         }
     }
     
@@ -26,6 +28,7 @@ public enum NavigationTab: Int, CaseIterable, Identifiable {
         case .dailyPlan: return "calendar.badge.clock"
         case .skills: return "network"
         case .character: return "person.crop.circle.fill"
+        case .challenge: return "calendar.badge.checkmark"
         }
     }
 }
@@ -52,38 +55,48 @@ public struct MainTabView: View {
                 
                 CharacterView(store: store)
                     .tag(NavigationTab.character)
+                Challenge75View(store: store)
+                    .tag(NavigationTab.challenge)
             }
             .tint(AscendTheme.electricBlue)
             
             // Custom High-Tech Tab Bar Overlay
-            HStack {
+            HStack(spacing: 0) {
                 ForEach(NavigationTab.allCases) { tab in
                     let isSelected = selectedTab == tab
-                    Spacer()
                     Button {
                         selectedTab = tab
                         HapticService.shared.triggerImpact(.light)
                     } label: {
                         VStack(spacing: 4) {
-                            Image(systemName: tab.iconName)
+                            Image(systemName: isSelected ? FairyAppearance.shared.selected.symbol : tab.iconName)
                                 .font(.system(size: isSelected ? 22 : 18, weight: isSelected ? .bold : .medium))
                                 .foregroundColor(isSelected ? AscendTheme.electricBlue : AscendTheme.textTertiary)
                                 .shadow(color: isSelected ? AscendTheme.electricBlue.opacity(0.5) : .clear, radius: 6)
                             
                             Text(tab.title)
                                 .font(.system(size: 10, weight: isSelected ? .bold : .medium, design: .rounded))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
                                 .foregroundColor(isSelected ? AscendTheme.textPrimary : AscendTheme.textTertiary)
                         }
-                        .frame(maxWidth: .infinity)
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
-                    Spacer()
+                    .accessibilityLabel(tab.title)
+                    .accessibilityAddTraits(isSelected ? [.isSelected] : [])
                 }
             }
             .padding(.vertical, 10)
             .background(
                 RoundedRectangle(cornerRadius: 24, style: .continuous)
                     .fill(AscendTheme.cardBackground)
+                    .overlay {
+                        FairyOrnament(palette: FairyAppearance.shared.selected)
+                            .opacity(0.12)
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
+                    }
                     .overlay(
                         RoundedRectangle(cornerRadius: 24, style: .continuous)
                             .strokeBorder(AscendTheme.cardBorder.opacity(0.6), lineWidth: 1)

@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct ASCENDApp: App {
+struct NovaraApp: App {
     @StateObject private var store = AppDataStore.shared
     
     var body: some Scene {

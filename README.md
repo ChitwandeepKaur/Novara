@@ -1,12 +1,36 @@
-# ASCEND: A Real-Life RPG for iOS
+# Novara: A Real-Life RPG for iOS
 
 > *"Your avatar represents who you are becoming. Your world represents the life you are building."*
 
-**ASCEND** is a native iOS single-player, goal-driven life RPG built with **Swift** and **SwiftUI**. Unlike conventional habit trackers or to-do lists, ASCEND transforms real-world goals, study sessions, workouts, and self-care routines into an immersive fantasy-tech RPG progression system.
+**Novara** is a native iOS single-player, goal-driven life RPG built with **Swift** and **SwiftUI**. Unlike conventional habit trackers or to-do lists, Novara transforms real-world goals, study sessions, workouts, and self-care routines into an immersive fantasy-tech RPG progression system.
 
 ---
 
 ## 🌟 Key Systems & Features
+
+### Weekly plan upload
+- In **Daily Plan → Week**, upload a UTF-8 text/Markdown file or a PDF containing selectable text, or paste your plan.
+- Use Monday through Sunday headings with timed task headings, for example `Python: Collections (60 min)`. Review task names, days, durations, optional work, and outside-core commitments before import.
+- Imported tasks are dated. The Plan date selector shows the right checklist and schedule; reimporting the same heading/date skips duplicates.
+- The November 9–15, 2026 plan is installed once from the verified shared chat, using only the six main subject headings per day: Python, CLI, DSA, system design, systems/Linux, and AI. See [the imported heading list](Artifacts/Week-1-Nov9-15-2026.md).
+- Daily non-negotiables are always included for all seven days of every opened or imported week: **DSA Practice**, **PHC QA**, **Sahota Services**, **Portfolio Work**. DSA and CLI topics link to DSA Practice and Portfolio Work without duplicating tasks or completion credit.
+- Default durations are 120, 120, 60, and 90 minutes respectively. PHC QA and Sahota Services sit outside the core focus budget. Each date has its own completion record.
+- Week 1 retains its 42 subject headings, with DSA and CLI headings attached to their non-negotiables and PHC QA/Sahota Services added daily. Nested exercises remain excluded. Optional DSA durations stay in the topic notes.
+- Weekly plans participate in local saves and JSON backups. The application does not use em dashes in display text; see [the writing convention](AGENTS.md).
+
+### 75-day challenge
+- Open **75 Days** to activate the tracker using the default November 9, 2026 start date or a new date.
+- Dashboard, Daily, Weekly, and Trends reproduce the supplied Google Sheet's tasks, log fields, formulas, and charts. See [the source mapping](CHALLENGE_TRACKER.md).
+- Today's five challenge goals also appear in **Daily Plan** and share the same editable log.
+- Track nutrition, optional calories, treat meals, ratings, weekly body measurements, and reflections; explicitly reuse recorded focus time when appropriate.
+- Challenge XP contributes to character levels and cosmetics: 10 per goal, 15 for all five, 10 per daily rating, 50 per weekly reflection, plus rated-day milestone bonuses. Rewards are awarded once, including previously saved qualifying logs.
+- Data stays offline and participates in JSON backups. There is no live write-back to Google Sheets.
+
+### Personal fairy themes
+- Choose Bloom, Stella, Flora, Musa, Tecna, or Aisha in **Settings → Your fairy affinity**. Flora is the initial palette.
+- Jewel-toned backgrounds, warm metallic borders, softer particles, and serif headings coordinate across the app.
+- Original native wing illustrations appear in onboarding, the daily-plan banner, and the world. The character sigil reflects skin, hair, and outfit choices.
+- Palette selection is saved locally on the device and updates immediately. Decorative artwork does not intercept taps or add VoiceOver noise.
 
 ### 1. Interactive Fantasy-Tech Game World
 - **Dynamic 2.5D Layered World Canvas:** Featuring celestial skyboxes, stardust particle systems, floating islands, and glowing Leyline bridges.
@@ -21,6 +45,14 @@
 - **Sub Quests:** Meaningful milestones with configurable completion conditions (`allTasksCompleted`, `numericalTarget`, `milestoneReached`, `deliverableCompleted`, `manualConfirmation`).
 - **Prerequisite Validation:** Directed Acyclic Graph (DAG) dependency graph with **cycle detection** preventing circular dependencies.
 - **Side Quests:** Simple recurring daily habits and secondary quest chains.
+
+### Mini Main Quests (temporary goals)
+- In **Quests → Add Mini Main Quest**, enter a title, target date, and one outcome per line.
+- Review and edit the planning, focused work, and verification sessions generated for each outcome.
+- Sessions join the Plan checklist immediately. Existing appointments are preserved; a session is appended when there is room.
+- Generate a daily schedule to reserve up to 25% of focus time for mini quests, earliest deadline first, with one next session per quest per day.
+- Completing sessions automatically completes milestones and the mini quest, awarding one-time bonuses. Missed deadlines preserve progress.
+- Breakdowns use local templates and can be customized before saving.
 
 ### 3. Smart Daily Planning Engine
 - **Deterministic & Explainable:** Allocates daily focus time based on user-configured priority weights (Default: **80% Career / 10% Fitness / 10% Self-Care**).
@@ -168,3 +200,19 @@ You can run the full automated test suite directly from the command line:
 3. **Milestone Integrity:** Future-Self transformations strictly require verified SubQuest deliverables. XP alone will not advance identity stages.
 4. **Anti-Guilt Mechanic:** Days off or missed target dates never strip away earned XP, never demote levels, and never break streaks punitive fashion.
 
+
+### Fairy journey
+
+Flora is the starting fairy. Lifetime character XP unlocks Aisha at 10,000 XP, Tecna at 20,000 XP, Musa at 30,000 XP, Stella at 40,000 XP, and Bloom at 50,000 XP. All existing XP sources count, including the 75 day challenge. Crossing a milestone automatically equips the newly unlocked fairy and updates the app palette. Settings shows progress and allows switching to any unlocked fairy. The selected fairy is saved in JSON backups; older backups unlock fairies from their existing lifetime XP. Resetting progress returns to Flora.
+
+The selected fairy also controls original elemental artwork throughout the UI: botanical vines and petals (Flora), waves and ripples (Aisha), circuits and facets (Tecna), musical staves and sound waves (Musa), sunbursts and lunar arcs (Stella), and flame contours (Bloom). Each fairy has a distinct wing silhouette, realm greeting, background, card ornaments, navigation emblem, and ambient particles. Ambient motion respects Reduce Motion. These native vector designs render offline without external image requests.
+
+Visual references: official Winx character profiles for [Flora](https://www.winxclub.com/en-us/blogs/discover-the-winx/flora), [Aisha](https://www.winxclub.com/en-us/blogs/discover-the-winx/aisha), [Tecna](https://www.winxclub.com/en-us/blogs/discover-the-winx/tecna), [Musa](https://www.winxclub.com/en-us/blogs/discover-the-winx/musa), [Stella](https://www.winxclub.com/en-us/blogs/discover-the-winx/stella), and [Bloom](https://www.winxclub.com/en-us/blogs/discover-the-winx/bloom). Artwork in Novara is original vector interpretation of these elemental references.
+
+The app is branded Novara on the Home Screen, in onboarding, Settings, and built app products. The existing bundle identifier and saved-data filename are preserved so updating the app keeps existing progress. The Xcode project and scheme remain named ASCEND for compatibility with current development commands.
+
+### Personal device, recovery, and online services
+
+See [PERSONAL_SETUP.md](PERSONAL_SETUP.md) for personal iPhone installation, Supabase cloud setup, secure online AI configuration, local recovery, and the physical-phone verification checklist. Automatic signing is enabled; selecting your Apple team and connecting a trusted device are still required.
+
+Novara is configured for free-only personal use: on-device template planning and optional Supabase Free cloud sync. No paid AI API, API key, subscription, or automatic service upgrade is used.

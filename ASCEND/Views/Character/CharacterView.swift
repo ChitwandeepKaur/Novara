@@ -29,6 +29,9 @@ public struct CharacterView: View {
                         // Avatar Presentation Card
                         renderAvatarHeroCard()
                         
+                        Label("\(FairyAppearance.shared.selected.name): \(FairyAppearance.shared.selected.element)", systemImage: FairyAppearance.shared.selected.symbol)
+                            .font(.system(.subheadline, design: .serif))
+                            .foregroundColor(AscendTheme.cyberCyan)
                         // Future-Self Roadmap
                         renderFutureSelfSection()
                         
@@ -81,31 +84,9 @@ public struct CharacterView: View {
         GlassCard(cornerRadius: 20, borderColor: AscendTheme.electricBlue) {
             VStack(spacing: 16) {
                 HStack(alignment: .center, spacing: 20) {
-                    // Avatar Visualization with Ambient Aura
-                    ZStack {
-                        // Pulsing Aura Ring
-                        Circle()
-                            .fill(
-                                RadialGradient(
-                                    colors: [AscendTheme.electricBlue.opacity(0.4), Color.clear],
-                                    center: .center,
-                                    startRadius: 10,
-                                    endRadius: 55
-                                )
-                            )
-                            .frame(width: 90, height: 90)
-                        
-                        Circle()
-                            .fill(AscendTheme.cardBackground)
-                            .frame(width: 76, height: 76)
-                            .overlay(Circle().stroke(AscendTheme.primaryGradient, lineWidth: 2))
-                        
-                        Image(systemName: "person.crop.circle.fill")
-                            .resizable()
-                            .frame(width: 68, height: 68)
-                            .foregroundColor(AscendTheme.cyberCyan)
-                    }
-                    
+                    FairyAvatar(profile: store.state.avatar)
+                        .frame(width: 112, height: 116)
+
                     VStack(alignment: .leading, spacing: 4) {
                         Text(store.state.avatar.title.uppercased())
                             .font(.system(size: 11, weight: .black, design: .monospaced))

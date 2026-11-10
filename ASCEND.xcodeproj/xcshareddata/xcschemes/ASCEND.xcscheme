@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "470B766A937E49D8AE6EEB9F"
-               BuildableName = "ASCEND.app"
+               BuildableName = "Novara.app"
                BlueprintName = "ASCEND"
                ReferencedContainer = "container:ASCEND.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "470B766A937E49D8AE6EEB9F"
-            BuildableName = "ASCEND.app"
+            BuildableName = "Novara.app"
             BlueprintName = "ASCEND"
             ReferencedContainer = "container:ASCEND.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "470B766A937E49D8AE6EEB9F"
-            BuildableName = "ASCEND.app"
+            BuildableName = "Novara.app"
             BlueprintName = "ASCEND"
             ReferencedContainer = "container:ASCEND.xcodeproj">
          </BuildableReference>

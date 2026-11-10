@@ -21,39 +21,30 @@ public struct ParticleFieldView: View {
     }
     
     public var body: some View {
-        GeometryReader { proxy in
-            TimelineView(.animation(minimumInterval: reduceMotion ? 1.0 : 0.033)) { timeline in
+        ZStack {
+            FairyOrnament(palette: FairyAppearance.shared.selected)
+                .opacity(0.13)
+            TimelineView(.animation(minimumInterval: 1.0 / 30, paused: reduceMotion)) { timeline in
                 Canvas { context, size in
-                    guard !reduceMotion else {
-                        // Static particles if reduce motion is enabled
-                        for p in particles {
-                            let rect = CGRect(x: p.x * size.width, y: p.y * size.height, width: p.radius * 2, height: p.radius * 2)
-                            context.fill(Path(ellipseIn: rect), with: .color(AscendTheme.cyberCyan.opacity(p.opacity * 0.4)))
-                        }
-                        return
-                    }
-                    
-                    let time = timeline.date.timeIntervalSinceReferenceDate
+                    let time = reduceMotion ? 0 : timeline.date.timeIntervalSinceReferenceDate
+                    guard let symbol = context.resolveSymbol(id: "element") else { return }
                     for p in particles {
-                        let animatedY = (p.y - CGFloat(time * Double(p.speed) * 0.05)).truncatingRemainder(dividingBy: 1.0)
-                        let normalizedY = animatedY < 0 ? animatedY + 1.0 : animatedY
-                        let animatedX = (p.x + sin(CGFloat(time + p.hueShift)) * 0.02).truncatingRemainder(dividingBy: 1.0)
-                        let normalizedX = animatedX < 0 ? animatedX + 1.0 : animatedX
-                        
-                        let rect = CGRect(
-                            x: normalizedX * size.width,
-                            y: normalizedY * size.height,
-                            width: p.radius * 2,
-                            height: p.radius * 2
-                        )
-                        
-                        let color = p.hueShift > 0.5 ? AscendTheme.electricBlue : AscendTheme.deepViolet
-                        context.fill(Path(ellipseIn: rect), with: .color(color.opacity(p.opacity)))
+                        let y = (p.y - CGFloat(time * Double(p.speed) * 0.025)).truncatingRemainder(dividingBy: 1)
+                        let x = p.x + (reduceMotion ? 0 : sin(CGFloat(time * 0.3 + p.hueShift)) * 0.02)
+                        var particleContext = context
+                        particleContext.opacity = p.opacity * 0.6
+                        particleContext.draw(symbol, at: CGPoint(x: x * size.width, y: (y < 0 ? y + 1 : y) * size.height))
                     }
+                } symbols: {
+                    Image(systemName: FairyAppearance.shared.selected.particleSymbol)
+                        .font(.system(size: 8, weight: .ultraLight))
+                        .foregroundColor(AscendTheme.cyberCyan)
+                        .tag("element")
                 }
             }
         }
         .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
     
     private static func generateParticles(count: Int) -> [Particle] {

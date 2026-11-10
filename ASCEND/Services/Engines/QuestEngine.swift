@@ -155,3 +155,76 @@ public final class QuestEngine: Sendable {
     }
 }
 
+
+// MARK: - Temporary goals alongside the main journey
+extension QuestEngine {
+    /// Each outcome becomes a milestone with three editable, concrete work sessions.
+    public func miniQuestBreakdown(outcomes: [String], category: QuestCategory, minutes: Int) -> [DailyQuest] {
+        outcomes.flatMap { outcome in
+            [
+                DailyQuest(name: "Plan: \(outcome)", description: "Define what done looks like, gather resources, and write the first steps for: \(outcome)", category: category, estimatedDurationMinutes: minutes),
+                DailyQuest(name: "Make progress: \(outcome)", description: "Work through the steps and produce a first result for: \(outcome)", category: category, estimatedDurationMinutes: minutes),
+                DailyQuest(name: "Finish & verify: \(outcome)", description: "Review the result against your success criteria and finish: \(outcome)", category: category, estimatedDurationMinutes: minutes)
+            ]
+        }
+    }
+
+    @discardableResult
+    public func addMiniQuest(title: String, outcomes: [String], deadline: Date,
+                             category: QuestCategory, tasks: [DailyQuest],
+                             now: Date = Date(), in state: inout AppState) throws -> UUID {
+        let cleanTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanOutcomes = outcomes.map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+        guard !cleanTitle.isEmpty, !cleanOutcomes.isEmpty,
+              tasks.count == cleanOutcomes.count * 3,
+              tasks.allSatisfy({ !$0.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && $0.estimatedDurationMinutes > 0 }),
+              Calendar.current.startOfDay(for: deadline) >= Calendar.current.startOfDay(for: now) else {
+            throw QuestEngineError("Enter a title, at least one outcome, and a deadline of today or later. Review all generated sessions before saving.")
+        }
+        let endOfDeadline = Calendar.current.date(byAdding: .day, value: 1, to: Calendar.current.startOfDay(for: deadline))!.addingTimeInterval(-1)
+        var mini = MiniMainQuest(title: cleanTitle, visionDescription: cleanOutcomes.joined(separator: "\n"), targetDeadline: endOfDeadline, category: category)
+        for (index, outcome) in cleanOutcomes.enumerated() {
+            let milestone = SubQuest(miniQuestId: mini.id, title: outcome, category: category,
+                                     completionCondition: .allTasksCompleted, targetDeadline: endOfDeadline, orderIndex: index)
+            mini.subQuestIds.append(milestone.id)
+            state.subQuests.append(milestone)
+            for offset in 0..<3 {
+                var task = tasks[index * 3 + offset]
+                task.id = UUID()
+                task.mainQuestId = nil
+                task.subQuestId = milestone.id
+                task.miniQuestId = mini.id
+                task.deadline = endOfDeadline
+                task.status = .notStarted
+                mini.dailyQuestIds.append(task.id)
+                state.dailyQuests.append(task)
+            }
+        }
+        state.miniMainQuests.append(mini)
+        return mini.id
+    }
+
+    public func refreshMiniQuestProgress(in state: inout AppState) {
+        for index in state.subQuests.indices where state.subQuests[index].miniQuestId != nil {
+            let milestone = state.subQuests[index]
+            let tasks = state.dailyQuests.filter { $0.subQuestId == milestone.id }
+            let done = !tasks.isEmpty && tasks.allSatisfy { $0.status == .completed }
+            state.subQuests[index].status = done ? .completed : .inProgress
+            state.subQuests[index].completedAt = done ? (milestone.completedAt ?? Date()) : nil
+            if done {
+                XPEngine.shared.awardCompletionBonusXP(amount: milestone.completionBonusXP, questId: milestone.id, questTitle: milestone.title, in: &state)
+            }
+        }
+        for index in state.miniMainQuests.indices {
+            let mini = state.miniMainQuests[index]
+            guard mini.status != .archived else { continue }
+            let tasks = state.dailyQuests.filter { $0.miniQuestId == mini.id }
+            let done = !tasks.isEmpty && tasks.allSatisfy { $0.status == .completed }
+            state.miniMainQuests[index].status = done ? .completed : .active
+            state.miniMainQuests[index].completedAt = done ? (mini.completedAt ?? Date()) : nil
+            if done {
+                XPEngine.shared.awardCompletionBonusXP(amount: mini.completionBonusXP, questId: mini.id, questTitle: mini.title, in: &state)
+            }
+        }
+    }
+}

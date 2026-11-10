@@ -35,7 +35,7 @@ public struct DailyRecapSheet: View {
                                     .font(.system(size: 24, weight: .bold, design: .rounded))
                                     .foregroundColor(AscendTheme.textPrimary)
                                 
-                                Text("Every focused minute moves your life realm forward. Celebrate the steps you took today—tomorrow will build upon them.")
+                                Text("Every focused minute moves your life realm forward. Celebrate the steps you took today. Tomorrow will build upon them.")
                                     .font(.system(size: 13))
                                     .foregroundColor(AscendTheme.textSecondary)
                                     .multilineTextAlignment(.center)

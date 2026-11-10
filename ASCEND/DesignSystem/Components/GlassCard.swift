@@ -6,7 +6,7 @@ public struct GlassCard<Content: View>: View {
     public let content: Content
     
     public init(
-        cornerRadius: CGFloat = 16,
+        cornerRadius: CGFloat = 20,
         borderColor: Color = AscendTheme.cardBorder,
         @ViewBuilder content: () -> Content
     ) {
@@ -21,18 +21,25 @@ public struct GlassCard<Content: View>: View {
             .background(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                     .fill(AscendTheme.cardBackground)
+                    .overlay(alignment: .trailing) {
+                        FairyOrnament(palette: FairyAppearance.shared.selected)
+                            .frame(width: 100)
+                            .opacity(0.16)
+                            .mask(LinearGradient(colors: [.clear, .black], startPoint: .leading, endPoint: .trailing))
+                            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+                    }
                     .overlay(
                         RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                             .strokeBorder(
                                 LinearGradient(
-                                    colors: [borderColor.opacity(0.8), borderColor.opacity(0.2)],
+                                    colors: [AscendTheme.metallicGold.opacity(0.28), borderColor.opacity(0.2), borderColor.opacity(0.5)],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
-                                lineWidth: 1.2
+                                lineWidth: 0.7
                             )
                     )
-                    .shadow(color: Color.black.opacity(0.4), radius: 10, x: 0, y: 5)
+                    .shadow(color: Color.black.opacity(0.18), radius: 16, x: 0, y: 8)
             )
     }
 }

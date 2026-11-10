@@ -8,6 +8,8 @@ public enum DailyViewMode: String, CaseIterable {
 public struct DailyPlanView: View {
     @ObservedObject var store: AppDataStore
     
+    @State private var showingWeeklyPlan = false
+    @State private var selectedDate = Date()
     @State private var viewMode: DailyViewMode = .timeline
     @State private var showingFocusTimer = false
     @State private var selectedQuestForTimer: DailyQuest?
@@ -22,8 +24,19 @@ public struct DailyPlanView: View {
                 ParticleFieldView(particleCount: 20)
                 
                 VStack(spacing: 0) {
+                    HStack {
+                        DatePicker("Plan date", selection: $selectedDate, displayedComponents: .date)
+                            .datePickerStyle(.compact).font(.subheadline)
+                        Button { showingWeeklyPlan = true } label: {
+                            Label("Week", systemImage: "square.and.arrow.down")
+                        }.foregroundColor(AscendTheme.cyberCyan)
+                    }.padding(.horizontal).padding(.top, 8)
+                    Stepper("Focus budget: \(availableHours, specifier: "%.1f") hours", value: $availableHours, in: 1...14, step: 0.5)
+                        .font(.caption).foregroundColor(AscendTheme.textSecondary)
+                        .padding(.horizontal).padding(.vertical, 4)
                     // Replan Alert Banner if proposal exists
-                    if let proposal = store.state.dailyPlan.pendingReplanProposal {
+                    if let proposal = store.state.dailyPlan.pendingReplanProposal,
+                       Calendar.current.isDate(store.state.dailyPlan.date, inSameDayAs: selectedDate) {
                         renderReplanAlertBanner(proposal)
                     }
                     
@@ -41,6 +54,30 @@ public struct DailyPlanView: View {
                     
                     ScrollView {
                         VStack(alignment: .leading, spacing: 16) {
+                            FairyRealmBanner(name: store.state.avatar.name)
+                            if let session = store.state.activeFocusSession {
+                                Button {
+                                    selectedQuestForTimer = store.state.dailyQuests.first { $0.id == session.dailyQuestId }
+                                    showingFocusTimer = true
+                                } label: {
+                                    GlassCard {
+                                        HStack {
+                                            Image(systemName: session.runStartedAt == nil ? "pause.circle" : "timer")
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text(session.questTitle).font(.headline)
+                                                Text(session.runStartedAt == nil ? "Session paused. Tap to resume." : "Focus in progress. Tap to open.")
+                                                    .font(.caption)
+                                            }
+                                            Spacer()
+                                            Image(systemName: "chevron.right")
+                                        }.foregroundStyle(AscendTheme.cyberCyan)
+                                    }
+                                }.buttonStyle(.plain)
+                            }
+                            if Calendar.current.isDate(selectedDate, inSameDayAs: Date()) {
+                                ChallengeDailyPanel(store: store)
+                            }
+                            renderNonNegotiables()
                             if store.state.dailyQuests.isEmpty && store.state.dailyPlan.slots.isEmpty {
                                 renderEmptyPlanPrompt()
                             } else {
@@ -51,7 +88,7 @@ public struct DailyPlanView: View {
                                 }
                             }
                         }
-                        .padding()
+                        .padding().padding(.bottom, 80)
                     }
                 }
             }
@@ -90,6 +127,16 @@ public struct DailyPlanView: View {
                             .foregroundColor(AscendTheme.electricBlue)
                     }
                 }
+            }
+            .onAppear {
+                var updated = store.state
+                WeeklyPlanEngine.installStarterWeek(in: &updated)
+                store.state = updated
+                adoptDayBudget()
+            }
+            .onChange(of: selectedDate) { _, _ in adoptDayBudget() }
+            .sheet(isPresented: $showingWeeklyPlan, onDismiss: { adoptDayBudget() }) {
+                WeeklyPlanImportSheet(store: store, weekOf: selectedDate)
             }
             .sheet(isPresented: $showingFocusTimer) {
                 FocusTimerSheet(quest: selectedQuestForTimer, store: store)
@@ -176,7 +223,7 @@ public struct DailyPlanView: View {
                 }
             }
             
-            if store.state.dailyPlan.slots.isEmpty {
+            if store.state.dailyPlan.slots.isEmpty || !Calendar.current.isDate(store.state.dailyPlan.date, inSameDayAs: selectedDate) {
                 GlassCard {
                     VStack(spacing: 8) {
                         Text("No schedule generated yet.")
@@ -260,6 +307,44 @@ public struct DailyPlanView: View {
         }
     }
     
+    @ViewBuilder
+    private func renderNonNegotiables() -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            SectionHeader(title: "Daily non-negotiables", subtitle: "Every day, every week", icon: "checkmark.seal.fill")
+            let tasks = WeeklyPlanEngine.tasks(on: selectedDate, in: store.state)
+            ForEach(DailyNonNegotiable.allCases, id: \.rawValue) { kind in
+                if let task = tasks.first(where: { $0.nonNegotiableKey == kind.rawValue }) {
+                    GlassCard(cornerRadius: 12) {
+                        HStack(alignment: .top, spacing: 12) {
+                            Button { toggleTaskCompletion(task) } label: {
+                                Image(systemName: task.status == .completed ? "checkmark.circle.fill" : "circle")
+                                    .font(.system(size: 22))
+                                    .foregroundColor(task.status == .completed ? AscendTheme.emeraldRecovery : AscendTheme.textTertiary)
+                            }
+                            .accessibilityLabel("Mark \(kind.title) \(task.status == .completed ? "incomplete" : "complete")")
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text(kind.title).font(.system(size: 15, weight: .semibold))
+                                    .foregroundColor(AscendTheme.textPrimary).strikethrough(task.status == .completed)
+                                if !task.description.isEmpty {
+                                    Text(task.description).font(.caption).foregroundColor(AscendTheme.textSecondary)
+                                }
+                                Text("\(task.estimatedDurationMinutes) mins\(kind.outsideCore ? " • Outside core" : "")")
+                                    .font(.caption).foregroundColor(AscendTheme.cyberCyan)
+                            }
+                            Spacer(minLength: 0)
+                            Button {
+                                selectedQuestForTimer = task
+                                showingFocusTimer = true
+                            } label: {
+                                Image(systemName: "play.circle.fill").font(.title3).foregroundColor(AscendTheme.electricBlue)
+                            }.accessibilityLabel("Focus on \(kind.title)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     // MARK: - Checklist View
     
     @ViewBuilder
@@ -271,7 +356,7 @@ public struct DailyPlanView: View {
                 icon: "checklist"
             )
             
-            let dailyQuests = store.state.dailyQuests
+            let dailyQuests = WeeklyPlanEngine.tasks(on: selectedDate, in: store.state).filter { $0.nonNegotiableKey == nil }
             if dailyQuests.isEmpty {
                 GlassCard {
                     Text("No daily quests available. Tap '+' in Quests to add tasks.")
@@ -303,7 +388,7 @@ public struct DailyPlanView: View {
                                         .foregroundColor(AscendTheme.textTertiary)
                                     Text("•")
                                         .foregroundColor(AscendTheme.textTertiary)
-                                    Text(quest.priority.rawValue)
+                                    Text(quest.isOptional == true ? "Optional" : quest.isExternalCommitment == true ? "Outside core" : quest.miniQuestId.flatMap { id in store.state.miniMainQuests.first { $0.id == id }?.title } ?? quest.priority.rawValue)
                                         .font(.system(size: 11, weight: .bold))
                                         .foregroundColor(AscendTheme.energeticCoral)
                                 }
@@ -329,7 +414,7 @@ public struct DailyPlanView: View {
                 Text("Design Your Focused Day")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundColor(AscendTheme.textPrimary)
-                Text("ASCEND's deterministic planning engine turns your active Main Quest and Side Habits into an achievable, structured daily schedule.")
+                Text("Novara's deterministic planning engine turns your active Main Quest and Side Habits into an achievable, structured daily schedule.")
                     .font(.system(size: 13))
                     .foregroundColor(AscendTheme.textSecondary)
                     .multilineTextAlignment(.center)
@@ -345,8 +430,19 @@ public struct DailyPlanView: View {
     
     // MARK: - Actions
     
+    private func adoptDayBudget() {
+        var updated = store.state
+        WeeklyPlanEngine.ensureNonNegotiables(forWeek: selectedDate, in: &updated)
+        store.state = updated
+        let datedCore = WeeklyPlanEngine.tasks(on: selectedDate, in: store.state).filter {
+            $0.weeklyPlanID != nil && $0.isOptional != true && $0.isExternalCommitment != true
+        }
+        availableHours = datedCore.isEmpty ? store.state.dailyPlan.availableWorkingHours : min(14, max(1, Double(datedCore.reduce(0) { $0 + $1.estimatedDurationMinutes }) / 60))
+    }
+
     private func generateSchedule() {
         let plan = PlanningEngine.shared.generateSuggestedPlan(
+            for: selectedDate,
             availableHours: availableHours,
             in: store.state
         )
@@ -371,13 +467,17 @@ public struct DailyPlanView: View {
         if store.state.dailyQuests[idx].status == .completed {
             store.state.dailyQuests[idx].status = .notStarted
             store.state.dailyQuests[idx].completedAt = nil
+            for slotIndex in store.state.dailyPlan.slots.indices where store.state.dailyPlan.slots[slotIndex].dailyQuestId == quest.id {
+                store.state.dailyPlan.slots[slotIndex].isCompleted = false
+            }
         } else {
             store.state.dailyQuests[idx].status = .completed
             store.state.dailyQuests[idx].completedAt = Date()
             
             // Award Effort / Task XP
+            let alreadyRewardedMiniTask = (quest.miniQuestId != nil || quest.nonNegotiableKey != nil) && store.state.xpTransactions.contains { $0.sourceQuestId == quest.id && $0.category == .effort }
             XPEngine.shared.awardEffortXP(
-                minutes: quest.estimatedDurationMinutes,
+                minutes: alreadyRewardedMiniTask ? 0 : quest.estimatedDurationMinutes,
                 questId: quest.id,
                 title: quest.name,
                 in: &store.state
@@ -403,6 +503,7 @@ public struct DailyPlanView: View {
             
             HapticService.shared.triggerNotification(.success)
         }
+        QuestEngine.shared.refreshMiniQuestProgress(in: &store.state)
     }
 }
 

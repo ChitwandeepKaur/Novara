@@ -16,6 +16,8 @@ public struct OnboardingFlowView: View {
     @State private var userGoalPrompt: String = ""
     @State private var selectedTimelineMonths: Int = 3
     @State private var isGenerating = false
+    @State private var planningError: String?
+    @State private var showingOnlineServices = false
     
     // Active Plan Draft
     @State private var planDraft: CustomPlanDraft = CustomPlanDraft(
@@ -73,6 +75,14 @@ public struct OnboardingFlowView: View {
                 // Step Content
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
+                        if currentStep == 1 || currentStep == 2 {
+                            HStack {
+                                Text("Free on-device planner").font(.caption)
+                                Spacer()
+                                Button("Cloud sync") { showingOnlineServices = true }.font(.caption)
+                            }.foregroundColor(AscendTheme.cyberCyan)
+                        }
+                        if isGenerating || isRefining { ProgressView("Preparing your plan...") }
                         switch currentStep {
                         case 0:
                             renderStep0Welcome()
@@ -147,6 +157,12 @@ public struct OnboardingFlowView: View {
                 }
             }
         }
+        .disabled(isGenerating || isRefining)
+        .sheet(isPresented: $showingOnlineServices) { OnlineServicesSheet(store: store) }
+        .alert("Planning needs attention", isPresented: Binding(get: { planningError != nil }, set: { if !$0 { planningError = nil } })) {
+            Button("Dismiss") { planningError = nil }
+            Button("OK") { planningError = nil }
+        } message: { Text(planningError ?? "") }
         .sheet(isPresented: $showingAddMilestone) {
             addMilestoneSheet
         }
@@ -160,25 +176,17 @@ public struct OnboardingFlowView: View {
     @ViewBuilder
     private func renderStep0Welcome() -> some View {
         VStack(spacing: 24) {
-            ZStack {
-                Circle()
-                    .fill(AscendTheme.primaryGradient.opacity(0.25))
-                    .frame(width: 96, height: 96)
-                    .overlay(Circle().stroke(AscendTheme.electricBlue.opacity(0.6), lineWidth: 2))
-                
-                Image(systemName: "globe.americas.fill")
-                    .font(.system(size: 46))
-                    .foregroundColor(AscendTheme.cyberCyan)
-            }
+            FairyWings()
+                .frame(width: 220, height: 150)
             .padding(.top, 20)
             
             VStack(spacing: 8) {
-                Text("WELCOME TO ASCEND")
+                Text("WELCOME TO NOVARA")
                     .font(.system(size: 11, weight: .black, design: .monospaced))
                     .foregroundColor(AscendTheme.electricBlue)
                 
                 Text("A Real-Life RPG")
-                    .font(.system(size: 32, weight: .bold, design: .rounded))
+                    .font(.system(size: 34, weight: .regular, design: .serif))
                     .foregroundColor(AscendTheme.textPrimary)
                 
                 Text("Your avatar represents who you are becoming.\nYour world represents the life you are building.")
@@ -643,20 +651,15 @@ public struct OnboardingFlowView: View {
             let prompt = userGoalPrompt.trimmingCharacters(in: .whitespacesAndNewlines)
             let effectivePrompt = prompt.isEmpty ? "Land a Software Engineering Job" : prompt
             
+            guard !isGenerating else { return }
+            isGenerating = true
             Task {
-                let generated = try? await LocalDeterministicAIService.shared.generateCustomPlan(
-                    from: effectivePrompt,
-                    timelineMonths: selectedTimelineMonths
-                )
-                await MainActor.run {
-                    if let gen = generated {
-                        self.planDraft = gen
-                    }
-                    withAnimation(.easeInOut) {
-                        currentStep = 2
-                    }
+                defer { isGenerating = false }
+                do {
+                    planDraft = try await PlanningProvider.generateCustomPlan(from: effectivePrompt, timelineMonths: selectedTimelineMonths)
+                    withAnimation(.easeInOut) { currentStep = 2 }
                     HapticService.shared.triggerImpact(.medium)
-                }
+                } catch { planningError = error.localizedDescription }
             }
         } else {
             // Manual mode -> ensure title is set
@@ -674,19 +677,16 @@ public struct OnboardingFlowView: View {
         let req = refinementRequest.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !req.isEmpty else { return }
         
+        guard !isRefining else { return }
+        isRefining = true
         Task {
-            let updated = try? await LocalDeterministicAIService.shared.refinePlan(
-                current: planDraft,
-                request: req
-            )
-            await MainActor.run {
-                if let up = updated {
-                    self.planDraft = up
-                    self.refinementMessage = up.explanation
-                }
-                self.refinementRequest = ""
+            defer { isRefining = false }
+            do {
+                planDraft = try await PlanningProvider.refinePlan(current: planDraft, request: req)
+                refinementMessage = planDraft.explanation
+                refinementRequest = ""
                 HapticService.shared.triggerNotification(.success)
-            }
+            } catch { planningError = error.localizedDescription }
         }
     }
     

@@ -28,7 +28,11 @@ struct TestRunnerMain {
         report(suiteName: "PlanningEngineTests", results: PlanningEngineTests.runAll())
         report(suiteName: "SkillEngineTests", results: SkillEngineTests.runAll())
         report(suiteName: "FutureSelfEngineTests", results: FutureSelfEngineTests.runAll())
+        report(suiteName: "OnlineServicesTests", results: OnlineServicesTests.runAll())
+        report(suiteName: "FocusSessionEngineTests", results: FocusSessionEngineTests.runAll())
         report(suiteName: "PersistenceTests", results: PersistenceTests.runAll())
+        report(suiteName: "ChallengeEngineTests", results: ChallengeEngineTests.runAll())
+        report(suiteName: "WeeklyPlanEngineTests", results: WeeklyPlanEngineTests.runAll())
         
         print("\n========================================")
         print("Results: \(totalPassed) passed, \(totalFailed) failed.")

@@ -1,203 +1,141 @@
 import SwiftUI
+import UserNotifications
 
 public struct FocusTimerSheet: View {
     @Environment(\.dismiss) private var dismiss
     let quest: DailyQuest?
     @ObservedObject var store: AppDataStore
-    
-    @State private var timeRemainingSeconds: Int = 25 * 60
-    @State private var totalTimerSeconds: Int = 25 * 60
-    @State private var isRunning = false
-    @State private var timer: Timer?
-    @State private var manualMinutes: Int = 25
+    @State private var durationMinutes = 25
+    @State private var manualMinutes = 25
     @State private var showManualLogging = false
-    
+    @State private var confirmingDiscard = false
+
     public var body: some View {
         NavigationStack {
             ZStack {
                 AscendTheme.backgroundDark.ignoresSafeArea()
                 ParticleFieldView(particleCount: 20)
-                
-                VStack(spacing: 28) {
-                    // Task Header
-                    VStack(spacing: 6) {
+                ScrollView {
+                    VStack(spacing: 24) {
                         Text("DEEP FOCUS CHAMBER")
-                            .font(.system(size: 11, weight: .black, design: .monospaced))
-                            .foregroundColor(AscendTheme.cyberCyan)
-                        Text(quest?.name ?? "Deliberate Practice")
-                            .font(.system(size: 20, weight: .bold, design: .rounded))
-                            .foregroundColor(AscendTheme.textPrimary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                    }
-                    .padding(.top, 20)
-                    
-                    // Circular Focus Timer Display
-                    ZStack {
-                        let progress = totalTimerSeconds > 0 ? Double(totalTimerSeconds - timeRemainingSeconds) / Double(totalTimerSeconds) : 0.0
-                        
-                        StatRing(
-                            progress: progress,
-                            lineWidth: 12,
-                            gradient: AscendTheme.primaryGradient
-                        )
-                        .frame(width: 240, height: 240)
-                        
-                        VStack(spacing: 8) {
-                            Text(formatTime(timeRemainingSeconds))
-                                .font(.system(size: 52, weight: .bold, design: .monospaced))
-                                .foregroundColor(AscendTheme.textPrimary)
-                            
-                            HStack(spacing: 4) {
-                                Image(systemName: "bolt.fill")
-                                    .foregroundColor(AscendTheme.electricBlue)
-                                Text("+\(max(1, (totalTimerSeconds - timeRemainingSeconds) / 60)) Effort XP")
-                                    .font(.system(size: 13, weight: .bold))
-                                    .foregroundColor(AscendTheme.textSecondary)
-                            }
-                        }
-                    }
-                    
-                    // Control Buttons
-                    HStack(spacing: 24) {
-                        Button {
-                            toggleTimer()
-                        } label: {
+                            .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                            .foregroundStyle(AscendTheme.cyberCyan)
+                        Text(store.state.activeFocusSession?.questTitle ?? quest?.name ?? "Deliberate Practice")
+                            .font(.system(size: 23, design: .serif)).multilineTextAlignment(.center)
+                        TimelineView(.periodic(from: .now, by: 1)) { context in
+                            let session = store.state.activeFocusSession
+                            let total = session?.plannedSeconds ?? durationMinutes * 60
+                            let remaining = session?.remainingSeconds(at: context.date) ?? total
+                            let minutes = Int(session?.elapsed(at: context.date) ?? 0) / 60
                             ZStack {
-                                Circle()
-                                    .fill(isRunning ? AscendTheme.energeticCoral : AscendTheme.electricBlue)
-                                    .frame(width: 68, height: 68)
-                                    .shadow(color: (isRunning ? AscendTheme.energeticCoral : AscendTheme.electricBlue).opacity(0.4), radius: 10)
-                                
-                                Image(systemName: isRunning ? "pause.fill" : "play.fill")
-                                    .font(.system(size: 26))
-                                    .foregroundColor(.white)
+                                StatRing(progress: Double(total - remaining) / Double(max(1, total)), lineWidth: 12)
+                                    .frame(width: 230, height: 230)
+                                VStack(spacing: 8) {
+                                    Text(String(format: "%02d:%02d", remaining / 60, remaining % 60))
+                                        .font(.system(size: 48, weight: .medium, design: .monospaced))
+                                    Text("\(minutes) minutes focused")
+                                        .font(.caption).foregroundStyle(AscendTheme.textSecondary)
+                                }
                             }
                         }
-                        
-                        Button {
-                            finishSession()
-                        } label: {
-                            ZStack {
-                                Circle()
-                                    .fill(AscendTheme.emeraldRecovery)
-                                    .frame(width: 68, height: 68)
-                                    .shadow(color: AscendTheme.emeraldRecovery.opacity(0.4), radius: 10)
-                                
-                                Image(systemName: "checkmark")
-                                    .font(.system(size: 26, weight: .bold))
-                                    .foregroundColor(.white)
+                        if let session = store.state.activeFocusSession {
+                            HStack(spacing: 24) {
+                                GlowingButton(title: session.runStartedAt == nil ? "Resume" : "Pause",
+                                              icon: session.runStartedAt == nil ? "play.fill" : "pause.fill") {
+                                    var updated = session
+                                    if updated.runStartedAt == nil { updated.resume() } else { updated.pause() }
+                                    store.state.activeFocusSession = updated
+                                    store.saveImmediately()
+                                }
+                                GlowingButton(title: "Finish", icon: "checkmark") {
+                                    FocusSessionEngine.finish(id: session.id, in: &store.state)
+                                    store.saveImmediately()
+                                    dismiss()
+                                }
+                            }
+                            Text("You can close this sheet or lock your phone. Your session is saved and will resume when you reopen Novara. Completed minutes earn XP up to your daily limit.")
+                                .font(.footnote).foregroundStyle(AscendTheme.textSecondary)
+                            Button("Discard session", role: .destructive) { confirmingDiscard = true }
+                        } else {
+                            Stepper("Session: \(durationMinutes) minutes", value: $durationMinutes, in: 5...180, step: 5)
+                            GlowingButton(title: "Start focus", icon: "play.fill") {
+                                FocusSessionEngine.start(quest: quest, minutes: durationMinutes, in: &store.state)
+                                store.saveImmediately()
+                            }
+                            Button(showManualLogging ? "Hide manual logging" : "Log focused time manually") {
+                                showManualLogging.toggle()
+                            }.foregroundStyle(AscendTheme.cyberCyan)
+                            if showManualLogging {
+                                Stepper("Time: \(manualMinutes) minutes", value: $manualMinutes, in: 5...240, step: 5)
+                                GlowingButton(title: "Log \(manualMinutes) minutes", icon: "clock.badge.checkmark") {
+                                    let xp = XPEngine.shared.awardEffortXP(minutes: manualMinutes, questId: quest?.id,
+                                        title: quest?.name ?? "Manual Focus", in: &store.state)
+                                    store.state.focusSessions.append(FocusSession(dailyQuestId: quest?.id,
+                                        questTitle: quest?.name ?? "Manual Focus", startTime: Date().addingTimeInterval(Double(-manualMinutes * 60)),
+                                        endTime: Date(), durationMinutes: manualMinutes, xpAwarded: xp))
+                                    store.saveImmediately()
+                                    dismiss()
+                                }
                             }
                         }
-                    }
-                    
-                    // Manual Adjust Option
-                    Button {
-                        showManualLogging.toggle()
-                    } label: {
-                        Text(showManualLogging ? "Hide Manual Logging" : "Log Effort Time Manually")
-                            .font(.system(size: 13, weight: .medium))
-                            .foregroundColor(AscendTheme.textSecondary)
-                    }
-                    
-                    if showManualLogging {
-                        VStack(spacing: 8) {
-                            Stepper("Time: \(manualMinutes) minutes", value: $manualMinutes, in: 5...240, step: 5)
-                                .foregroundColor(AscendTheme.textPrimary)
-                                .padding(.horizontal, 40)
-                            
-                            GlowingButton(title: "Log \(manualMinutes) Minutes Effort", icon: "clock.badge.checkmark") {
-                                logManualTime()
-                            }
+                        if let error = store.storageError {
+                            Text(error).font(.footnote).foregroundStyle(AscendTheme.energeticCoral)
+                            Button("Retry save") { store.saveImmediately() }
                         }
-                    }
-                    
-                    Spacer()
+                    }.padding(24)
                 }
             }
+            .foregroundStyle(AscendTheme.textPrimary)
+            .navigationTitle("Focus")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Dismiss") {
-                        stopTimer()
-                        dismiss()
-                    }
-                    .foregroundColor(AscendTheme.textSecondary)
+                    Button("Close") { store.saveImmediately(); dismiss() }
                 }
+            }
+            .confirmationDialog("Discard this focus session? No time or XP will be logged.", isPresented: $confirmingDiscard, titleVisibility: .visible) {
+                Button("Discard session", role: .destructive) {
+                    store.state.activeFocusSession = nil
+                    store.saveImmediately()
+                    dismiss()
+                }
+            }
+            .onChange(of: store.state.activeFocusSession?.id) { old, new in
+                if old != nil && new == nil { dismiss() }
             }
         }
     }
-    
-    private func toggleTimer() {
-        if isRunning {
-            timer?.invalidate()
-            timer = nil
-            isRunning = false
-        } else {
-            isRunning = true
-            timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-                if timeRemainingSeconds > 0 {
-                    timeRemainingSeconds -= 1
-                } else {
-                    finishSession()
-                }
-            }
+}
+
+/// The system delivers the reminder even when Novara is suspended.
+@MainActor
+public enum FocusNotifications {
+    private static let prefix = "novara.focus.complete."
+    private static var revision = 0
+    public static func update(for session: ActiveFocusSession?) async {
+        revision += 1
+        let current = revision
+        let center = UNUserNotificationCenter.current()
+        let pending = await center.pendingNotificationRequests()
+        guard !Task.isCancelled, current == revision else { return }
+        center.removePendingNotificationRequests(withIdentifiers: pending.map(\.identifier).filter { $0.hasPrefix(prefix) })
+        guard let session, let deadline = session.deadline, deadline > Date() else { return }
+        let settings = await center.notificationSettings()
+        if settings.authorizationStatus == .notDetermined {
+            _ = try? await center.requestAuthorization(options: [.alert, .sound])
         }
-        HapticService.shared.triggerImpact(.medium)
-    }
-    
-    private func stopTimer() {
-        timer?.invalidate()
-        timer = nil
-        isRunning = false
-    }
-    
-    private func finishSession() {
-        stopTimer()
-        let minutesCompleted = max(1, (totalTimerSeconds - timeRemainingSeconds) / 60)
-        
-        let awardedXP = XPEngine.shared.awardEffortXP(
-            minutes: minutesCompleted,
-            questId: quest?.id,
-            title: quest?.name ?? "Focus Session",
-            in: &store.state
-        )
-        
-        let session = FocusSession(
-            dailyQuestId: quest?.id,
-            questTitle: quest?.name ?? "Focused Effort",
-            durationMinutes: minutesCompleted,
-            xpAwarded: awardedXP
-        )
-        store.state.focusSessions.append(session)
-        
-        HapticService.shared.triggerNotification(.success)
-        dismiss()
-    }
-    
-    private func logManualTime() {
-        let awardedXP = XPEngine.shared.awardEffortXP(
-            minutes: manualMinutes,
-            questId: quest?.id,
-            title: quest?.name ?? "Manual Effort Logging",
-            in: &store.state
-        )
-        
-        let session = FocusSession(
-            dailyQuestId: quest?.id,
-            questTitle: quest?.name ?? "Manual Log",
-            durationMinutes: manualMinutes,
-            xpAwarded: awardedXP
-        )
-        store.state.focusSessions.append(session)
-        
-        HapticService.shared.triggerNotification(.success)
-        dismiss()
-    }
-    
-    private func formatTime(_ totalSeconds: Int) -> String {
-        let minutes = totalSeconds / 60
-        let seconds = totalSeconds % 60
-        return String(format: "%02d:%02d", minutes, seconds)
+        guard !Task.isCancelled, current == revision, deadline > Date() else { return }
+        let identifier = prefix + session.id.uuidString + "." + UUID().uuidString
+        let content = UNMutableNotificationContent()
+        content.title = "Focus complete"
+        content.body = "Your focus session is complete. Open Novara to review your progress."
+        content.sound = .default
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(1, deadline.timeIntervalSinceNow), repeats: false)
+        do {
+            try await center.add(UNNotificationRequest(identifier: identifier, content: content, trigger: trigger))
+            if Task.isCancelled || current != revision {
+                center.removePendingNotificationRequests(withIdentifiers: [identifier])
+            }
+        } catch { /* Focus timing still works if notifications are disabled or unavailable. */ }
     }
 }

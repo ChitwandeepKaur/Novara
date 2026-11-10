@@ -161,7 +161,7 @@ public final class LocalDeterministicAIService: PlanningAIServiceProtocol {
                 FutureSelfStageDraft(id: "s1", stageIndex: 1, title: "The Initiate", tagline: "Stepping onto the Path", milestoneRequirement: "Define technical roadmap & schedule"),
                 FutureSelfStageDraft(id: "s2", stageIndex: 2, title: "The Artisan Builder", tagline: "From Concept to Deployed Software", milestoneRequirement: "Live portfolio deployed & 25 DSA solved"),
                 FutureSelfStageDraft(id: "s3", stageIndex: 3, title: "The Resolute Contender", tagline: "Battle-Tested and Interview Ready", milestoneRequirement: "50 DSA solved & mock interviews finished"),
-                FutureSelfStageDraft(id: "s4", stageIndex: 4, title: "The Breakthrough Self", tagline: "The Offer Landed — The New Reality", milestoneRequirement: "Software Engineering Offer Secured")
+                FutureSelfStageDraft(id: "s4", stageIndex: 4, title: "The Breakthrough Self", tagline: "The Offer Landed: The New Reality", milestoneRequirement: "Software Engineering Offer Secured")
             ],
             explanation: "Optimized 80/10/10 blueprint balancing deep coding hours with physical stamina and cognitive recovery."
         )

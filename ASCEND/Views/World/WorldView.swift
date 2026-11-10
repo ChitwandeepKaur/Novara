@@ -19,7 +19,7 @@ public struct WorldView: View {
                     // World Status Header
                     HStack(alignment: .center) {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("THE ASCENDANT REALM")
+                            Text(FairyAppearance.shared.selected.realmName.uppercased())
                                 .font(.system(size: 11, weight: .black, design: .monospaced))
                                 .foregroundColor(AscendTheme.electricBlue)
                             
@@ -45,7 +45,7 @@ public struct WorldView: View {
                                 )
                                 .frame(width: 34, height: 34)
                                 
-                                Image(systemName: "sparkles")
+                                Image(systemName: FairyAppearance.shared.selected.symbol)
                                     .font(.system(size: 12, weight: .bold))
                                     .foregroundColor(AscendTheme.cyberCyan)
                             }
@@ -97,6 +97,12 @@ public struct WorldView: View {
                                 )
                             }
                             
+                            // Celestial seal behind the realm: decorative, with no hit target.
+                            FairyWings()
+                                .frame(width: w * 0.9, height: h * 0.6)
+                                .opacity(0.22)
+                                .position(x: w * 0.5, y: h * 0.4)
+
                             // 2. Render World Regions
                             ForEach(store.state.worldState.regions) { region in
                                 let posX = region.islandCenterX * w
@@ -111,7 +117,7 @@ public struct WorldView: View {
                                         Circle()
                                             .fill(
                                                 RadialGradient(
-                                                    colors: [Color(hex: region.themeColorHex).opacity(0.35 * region.illuminationLevel), Color.clear],
+                                                    colors: [regionAccent(region).opacity(0.35 * region.illuminationLevel), Color.clear],
                                                     center: .center,
                                                     startRadius: 10,
                                                     endRadius: region.islandRadius
@@ -127,7 +133,7 @@ public struct WorldView: View {
                                                 Circle()
                                                     .strokeBorder(
                                                         LinearGradient(
-                                                            colors: [Color(hex: region.themeColorHex).opacity(0.6), Color.clear],
+                                                            colors: [regionAccent(region).opacity(0.6), Color.clear],
                                                             startPoint: .top,
                                                             endPoint: .bottom
                                                         ),
@@ -191,11 +197,11 @@ public struct WorldView: View {
                                     } label: {
                                         HStack(spacing: 12) {
                                             Circle()
-                                                .fill(Color(hex: region.themeColorHex).opacity(0.2))
+                                                .fill(regionAccent(region).opacity(0.2))
                                                 .frame(width: 40, height: 40)
                                                 .overlay(
                                                     Image(systemName: region.regionType == .careerKingdom ? "sparkles" : (region.regionType == .fitnessGrounds ? "flame.fill" : "leaf.fill"))
-                                                        .foregroundColor(Color(hex: region.themeColorHex))
+                                                        .foregroundColor(regionAccent(region))
                                                 )
                                             
                                             VStack(alignment: .leading, spacing: 2) {
@@ -214,7 +220,7 @@ public struct WorldView: View {
                                                 .fill(AscendTheme.cardBackground)
                                                 .overlay(
                                                     RoundedRectangle(cornerRadius: 12)
-                                                        .stroke(Color(hex: region.themeColorHex).opacity(0.3), lineWidth: 1)
+                                                        .stroke(regionAccent(region).opacity(0.3), lineWidth: 1)
                                                 )
                                         )
                                     }
@@ -231,6 +237,16 @@ public struct WorldView: View {
             .sheet(item: $selectedRegion) { region in
                 RegionDetailSheet(region: region, store: store)
             }
+        }
+    }
+}
+
+extension WorldView {
+    private func regionAccent(_ region: WorldRegion) -> Color {
+        switch region.regionType {
+        case .careerKingdom: return AscendTheme.electricBlue
+        case .fitnessGrounds: return AscendTheme.deepViolet
+        case .selfCareSanctuary, .custom: return AscendTheme.cyberCyan
         }
     }
 }

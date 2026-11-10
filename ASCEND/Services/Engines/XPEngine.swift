@@ -157,7 +157,9 @@ public final class XPEngine: Sendable {
     
     private func applyTransaction(_ tx: XPTransaction, in state: inout AppState) {
         state.xpTransactions.append(tx)
+        let previousXP = state.avatar.totalCumulativeXP
         state.avatar.totalCumulativeXP += tx.amount
+        state.updateFairyProgress(previousXP: previousXP)
         
         let newLevel = calculateLevel(from: state.avatar.totalCumulativeXP)
         state.avatar.level = newLevel

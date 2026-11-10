@@ -9,7 +9,7 @@ public enum QuestStatus: String, Codable, CaseIterable, Sendable {
     case blocked = "Blocked"
     case skipped = "Skipped"
     case archived = "Archived"
-    
+
     public var isTerminal: Bool {
         self == .completed || self == .archived || self == .skipped
     }
@@ -20,7 +20,7 @@ public enum QuestCategory: Codable, Hashable, Sendable {
     case fitness
     case selfCare
     case custom(String)
-    
+
     public var displayName: String {
         switch self {
         case .career: return "Career"
@@ -29,7 +29,7 @@ public enum QuestCategory: Codable, Hashable, Sendable {
         case .custom(let name): return name
         }
     }
-    
+
     public var iconName: String {
         switch self {
         case .career: return "briefcase.fill"
@@ -45,7 +45,7 @@ public enum QuestPriority: String, Codable, CaseIterable, Comparable, Sendable {
     case medium = "Medium"
     case high = "High"
     case critical = "Critical"
-    
+
     private var sortOrder: Int {
         switch self {
         case .low: return 1
@@ -54,7 +54,7 @@ public enum QuestPriority: String, Codable, CaseIterable, Comparable, Sendable {
         case .critical: return 4
         }
     }
-    
+
     public static func < (lhs: QuestPriority, rhs: QuestPriority) -> Bool {
         lhs.sortOrder < rhs.sortOrder
     }
@@ -65,7 +65,7 @@ public enum QuestDifficulty: String, Codable, CaseIterable, Sendable {
     case medium = "Medium"
     case hard = "Hard"
     case epic = "Epic"
-    
+
     public var defaultXP: Int {
         switch self {
         case .easy: return 25
@@ -82,7 +82,7 @@ public enum CompletionCondition: Codable, Hashable, Sendable {
     case milestoneReached(description: String)
     case deliverableCompleted(deliverableName: String)
     case manualConfirmation
-    
+
     public var description: String {
         switch self {
         case .allTasksCompleted:
@@ -97,7 +97,7 @@ public enum CompletionCondition: Codable, Hashable, Sendable {
             return "Manual confirmation of achievement"
         }
     }
-    
+
     public var isSatisfied: Bool {
         switch self {
         case .allTasksCompleted:
@@ -117,6 +117,12 @@ public struct DailyQuest: Identifiable, Codable, Equatable, Sendable {
     public var mainQuestId: UUID?
     public var subQuestId: UUID?
     public var sideQuestId: UUID?
+    public var miniQuestId: UUID?
+    public var plannedDate: Date?
+    public var weeklyPlanID: UUID?
+    public var isOptional: Bool?
+    public var isExternalCommitment: Bool?
+    public var nonNegotiableKey: String?
     public var category: QuestCategory
     public var priority: QuestPriority
     public var estimatedDurationMinutes: Int
@@ -134,7 +140,7 @@ public struct DailyQuest: Identifiable, Codable, Equatable, Sendable {
     public var evidenceIds: [UUID]
     public var completedAt: Date?
     public var createdAt: Date
-    
+
     public init(
         id: UUID = UUID(),
         name: String,
@@ -142,6 +148,7 @@ public struct DailyQuest: Identifiable, Codable, Equatable, Sendable {
         mainQuestId: UUID? = nil,
         subQuestId: UUID? = nil,
         sideQuestId: UUID? = nil,
+        miniQuestId: UUID? = nil,
         category: QuestCategory = .career,
         priority: QuestPriority = .medium,
         estimatedDurationMinutes: Int = 60,
@@ -158,7 +165,12 @@ public struct DailyQuest: Identifiable, Codable, Equatable, Sendable {
         notes: String = "",
         evidenceIds: [UUID] = [],
         completedAt: Date? = nil,
-        createdAt: Date = Date()
+        createdAt: Date = Date(),
+        plannedDate: Date? = nil,
+        weeklyPlanID: UUID? = nil,
+        isOptional: Bool? = false,
+        isExternalCommitment: Bool? = false,
+        nonNegotiableKey: String? = nil
     ) {
         self.id = id
         self.name = name
@@ -166,6 +178,12 @@ public struct DailyQuest: Identifiable, Codable, Equatable, Sendable {
         self.mainQuestId = mainQuestId
         self.subQuestId = subQuestId
         self.sideQuestId = sideQuestId
+        self.miniQuestId = miniQuestId
+        self.plannedDate = plannedDate
+        self.weeklyPlanID = weeklyPlanID
+        self.isOptional = isOptional
+        self.isExternalCommitment = isExternalCommitment
+        self.nonNegotiableKey = nonNegotiableKey
         self.category = category
         self.priority = priority
         self.estimatedDurationMinutes = estimatedDurationMinutes
@@ -188,7 +206,8 @@ public struct DailyQuest: Identifiable, Codable, Equatable, Sendable {
 
 public struct SubQuest: Identifiable, Codable, Equatable, Sendable {
     public var id: UUID
-    public var mainQuestId: UUID
+    public var mainQuestId: UUID?
+    public var miniQuestId: UUID?
     public var title: String
     public var description: String
     public var category: QuestCategory
@@ -201,10 +220,11 @@ public struct SubQuest: Identifiable, Codable, Equatable, Sendable {
     public var linkedSkillIds: [String]
     public var completedAt: Date?
     public var createdAt: Date
-    
+
     public init(
         id: UUID = UUID(),
-        mainQuestId: UUID,
+        mainQuestId: UUID? = nil,
+        miniQuestId: UUID? = nil,
         title: String,
         description: String = "",
         category: QuestCategory = .career,
@@ -220,6 +240,7 @@ public struct SubQuest: Identifiable, Codable, Equatable, Sendable {
     ) {
         self.id = id
         self.mainQuestId = mainQuestId
+        self.miniQuestId = miniQuestId
         self.title = title
         self.description = description
         self.category = category
@@ -252,7 +273,7 @@ public struct SideQuest: Identifiable, Codable, Equatable, Sendable {
     public var xpPerCompletion: Int
     public var currentStreak: Int
     public var createdAt: Date
-    
+
     public init(
         id: UUID = UUID(),
         title: String,
@@ -284,7 +305,7 @@ public struct PriorityAllocation: Codable, Equatable, Sendable {
     public var careerWeight: Double
     public var fitnessWeight: Double
     public var selfCareWeight: Double
-    
+
     public init(careerWeight: Double = 0.8, fitnessWeight: Double = 0.1, selfCareWeight: Double = 0.1) {
         let total = careerWeight + fitnessWeight + selfCareWeight
         if total > 0 {
@@ -310,7 +331,7 @@ public struct MainQuest: Identifiable, Codable, Equatable, Sendable {
     public var completionBonusXP: Int
     public var completedAt: Date?
     public var createdAt: Date
-    
+
     public init(
         id: UUID = UUID(),
         title: String,
@@ -333,5 +354,53 @@ public struct MainQuest: Identifiable, Codable, Equatable, Sendable {
         self.completionBonusXP = completionBonusXP
         self.completedAt = completedAt
         self.createdAt = createdAt
+    }
+}
+
+public struct MiniMainQuest: Identifiable, Codable, Equatable, Sendable {
+    public var id: UUID
+    public var title: String
+    public var visionDescription: String
+    public var targetDeadline: Date
+    public var category: QuestCategory
+    public var status: QuestStatus // .active, .completed, .archived
+    public var completionBonusXP: Int
+    public var subQuestIds: [UUID]
+    public var dailyQuestIds: [UUID]
+    public var completedAt: Date?
+    public var createdAt: Date
+
+    public init(
+        id: UUID = UUID(),
+        title: String,
+        visionDescription: String = "",
+        targetDeadline: Date,
+        category: QuestCategory = .career,
+        status: QuestStatus = .active,
+        completionBonusXP: Int = 1000,
+        subQuestIds: [UUID] = [],
+        dailyQuestIds: [UUID] = [],
+        completedAt: Date? = nil,
+        createdAt: Date = Date()
+    ) {
+        self.id = id
+        self.title = title
+        self.visionDescription = visionDescription
+        self.targetDeadline = targetDeadline
+        self.category = category
+        self.status = status
+        self.completionBonusXP = completionBonusXP
+        self.subQuestIds = subQuestIds
+        self.dailyQuestIds = dailyQuestIds
+        self.completedAt = completedAt
+        self.createdAt = createdAt
+    }
+
+    public var daysRemaining: Int {
+        let calendar = Calendar.current
+        let startOfToday = calendar.startOfDay(for: Date())
+        let startOfDeadline = calendar.startOfDay(for: targetDeadline)
+        let components = calendar.dateComponents([.day], from: startOfToday, to: startOfDeadline)
+        return max(0, components.day ?? 0)
     }
 }

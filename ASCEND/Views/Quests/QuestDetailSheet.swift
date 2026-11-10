@@ -82,7 +82,7 @@ public struct QuestDetailSheet: View {
                     HStack {
                         XPBadge(amount: sq.completionBonusXP, category: .completionBonus)
                         Spacer()
-                        if sq.status != .completed {
+                        if sq.status != .completed && sq.miniQuestId == nil {
                             Button("Mark Complete") {
                                 completeSubQuest(sq)
                             }

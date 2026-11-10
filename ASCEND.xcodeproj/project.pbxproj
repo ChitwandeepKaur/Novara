@@ -7,165 +7,195 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		31C458ADDECF4F0E914AC980 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC15D6D1274A436D8CFA5CDD /* Theme.swift */; };
-		1754EBD176AF41DEB2046FF8 /* GlowingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03B085F74644CFE89334AFF /* GlowingButton.swift */; };
-		BB786FBFA01047EF9E2257E2 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5617C6050E9D40F48C8DAC6A /* GlassCard.swift */; };
-		939802ADA05C49A9BFF10FB2 /* StatRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5F404F8A445988CBB06A9 /* StatRing.swift */; };
-		76079095678B46EFA54A8FB6 /* ParticleFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D21F00437EA4BCF8935A097 /* ParticleFieldView.swift */; };
-		5599B2DFDFF64D0C84C4070F /* XPBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D93E9E40234E17A564634B /* XPBadge.swift */; };
-		328B92032C364BAB998BF939 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0D8CCA88C04633AA7A801E /* SectionHeader.swift */; };
-		5816902DE10947338320AD2F /* ASCENDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94B7FB7E1FD420AA5350A41 /* ASCENDApp.swift */; };
-		6BFD961FF6E348D5970EF3A0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262D26ACBA5E447DA2F50E66 /* ContentView.swift */; };
-		95C2230DE3F2403B930C78C8 /* WorldModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48BE832439E4D79BC111877 /* WorldModels.swift */; };
-		870E459F161040F0BF1E8600 /* CharacterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AC6D5A73884AAD8725FBFC /* CharacterModels.swift */; };
-		F1FC589DE6AE4239B6AC0750 /* FutureSelfModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F79A9172B854BACB5D66ACD /* FutureSelfModels.swift */; };
-		D5520BB2F6244AFE9E7676F3 /* QuestModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC9CFFE5004EBE9014D21D /* QuestModels.swift */; };
-		5D66058924B348A0B53DD99C /* SkillModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0740186764A51920665A1 /* SkillModels.swift */; };
-		1AF3A20EBE1B4A75BEBC76E0 /* AchievementModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F0D30B93BB4CA6ADCFEE98 /* AchievementModels.swift */; };
-		1B0D5FB7C98F4762B3F4BC17 /* PlanningModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF8E45ED7714B7282C44122 /* PlanningModels.swift */; };
-		BF5FD635BCBC49DD90C945FF /* XPModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40759E5148534732A9637140 /* XPModels.swift */; };
-		99492409BC1D4B93AACD6C61 /* QuestDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AB47B7C57A4146AA9F3384 /* QuestDetailSheet.swift */; };
-		19C1C52A6D25437C8708864B /* QuestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6274339D6EB49209E6D9C01 /* QuestsView.swift */; };
-		9302871CE24B483AB05F4A11 /* QuestEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B973635F4F9D41A3A8FDC447 /* QuestEditorSheet.swift */; };
-		13969CACE3D344E489CDCE93 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20BE89F2B74A8085073C65 /* SettingsView.swift */; };
-		9D8E625B9F40406FA8FA6602 /* AchievementArchiveSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF70C74BC5418196656BA8 /* AchievementArchiveSheet.swift */; };
-		536FE89F480548CFB95001E8 /* AvatarCustomizerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719032DE6A74B1994B5944D /* AvatarCustomizerSheet.swift */; };
-		AFB773771BE44BBAB3403424 /* CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8AFF01AA41483488672D97 /* CharacterView.swift */; };
-		FC7136F322F44FB7B8D282DC /* DailyRecapSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E18ED803B70457E94D4FBB5 /* DailyRecapSheet.swift */; };
-		F88C0BE70B9246E59E8811D5 /* DailyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA58F02A750496C82F51EC7 /* DailyPlanView.swift */; };
-		84717859EB6D419EBE42E5B7 /* FocusTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F82A869D47435D8BE23C20 /* FocusTimerSheet.swift */; };
-		65C68031DE064F8C8EA6707E /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D252D48C32294A88B77F525C /* MainTabView.swift */; };
-		EA5F318F5A05486DA70196F9 /* WorldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816AAEC41FD54F7F8E329168 /* WorldView.swift */; };
-		0A95F1A48929444AB1DC4853 /* RegionDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC30BAF12BB466788B70D84 /* RegionDetailSheet.swift */; };
-		7E4E590F49004610B285A357 /* SkillTreesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19406F3AAF540949ED1BE50 /* SkillTreesView.swift */; };
-		0DC5780C0CBE4B28B0A0F45F /* SkillNodeDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308C91CDABAD4561968ABD49 /* SkillNodeDetailSheet.swift */; };
-		CDE81FE27B1B4A79A02E588F /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C40A5E83645E0A51FF4FC /* OnboardingFlowView.swift */; };
-		2D20B4EBC9B04B77A23552F9 /* HapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB70BA5CA114F1481FED78A /* HapticService.swift */; };
-		6F1D9FC28FC24B82AD62F58E /* XPEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEE87793F8A478CB05AD781 /* XPEngine.swift */; };
-		7EB0BAFD03E847FEA53723D9 /* PlanningEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DEB2B13A404A2A91FED82D /* PlanningEngine.swift */; };
-		10821AF515DE46519DBA7BBA /* FutureSelfEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329DF521B1249B9A0380A67 /* FutureSelfEngine.swift */; };
-		B1C542AE842F4C8C8F18342C /* WorldEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BF1DE6109449469A33FDEA /* WorldEngine.swift */; };
-		5D0F38B222AC46D1AE32CF72 /* QuestEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9861C0D9854F689C834EE0 /* QuestEngine.swift */; };
-		8DE890409B12459EB886A5A1 /* SkillEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD29EB55D4A988BA77D32 /* SkillEngine.swift */; };
-		17C5FBEDA7184297A11AFE6C /* PlanningAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99312E5CC59F4E369FB196F5 /* PlanningAIService.swift */; };
-		44C4C618EAF74929B6A595FD /* AppDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5E484330E04DC0BBF09C49 /* AppDataStore.swift */; };
-		B6C7C8D7283340D1A7A18D40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57BD35529EE405BB737F0EA /* Assets.xcassets */; };
+		06863C935C981A097C87C8A8 /* ASCEND/Services/Engines/WeeklyPlanEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977872CEB4CC38CEC8DC483 /* ASCEND/Services/Engines/WeeklyPlanEngine.swift */; };
+		0A95F1A48929444AB1DC4853 /* ASCEND/Views/World/RegionDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC30BAF12BB466788B70D84 /* ASCEND/Views/World/RegionDetailSheet.swift */; };
+		0DC5780C0CBE4B28B0A0F45F /* ASCEND/Views/Skills/SkillNodeDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308C91CDABAD4561968ABD49 /* ASCEND/Views/Skills/SkillNodeDetailSheet.swift */; };
+		10821AF515DE46519DBA7BBA /* ASCEND/Services/Engines/FutureSelfEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B329DF521B1249B9A0380A67 /* ASCEND/Services/Engines/FutureSelfEngine.swift */; };
+		13969CACE3D344E489CDCE93 /* ASCEND/Views/Settings/SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E20BE89F2B74A8085073C65 /* ASCEND/Views/Settings/SettingsView.swift */; };
+		1754EBD176AF41DEB2046FF8 /* ASCEND/DesignSystem/Components/GlowingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F03B085F74644CFE89334AFF /* ASCEND/DesignSystem/Components/GlowingButton.swift */; };
+		17C5FBEDA7184297A11AFE6C /* ASCEND/Services/AI/PlanningAIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99312E5CC59F4E369FB196F5 /* ASCEND/Services/AI/PlanningAIService.swift */; };
+		19C1C52A6D25437C8708864B /* ASCEND/Views/Quests/QuestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6274339D6EB49209E6D9C01 /* ASCEND/Views/Quests/QuestsView.swift */; };
+		1AF3A20EBE1B4A75BEBC76E0 /* ASCEND/Models/AchievementModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F0D30B93BB4CA6ADCFEE98 /* ASCEND/Models/AchievementModels.swift */; };
+		1B0D5FB7C98F4762B3F4BC17 /* ASCEND/Models/PlanningModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF8E45ED7714B7282C44122 /* ASCEND/Models/PlanningModels.swift */; };
+		2CCE43BF9BC08FD218805AA1 /* ASCEND/Models/WeeklyPlanModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D22E8AA154D28C634E50B /* ASCEND/Models/WeeklyPlanModels.swift */; };
+		2D20B4EBC9B04B77A23552F9 /* ASCEND/Services/Utilities/HapticService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB70BA5CA114F1481FED78A /* ASCEND/Services/Utilities/HapticService.swift */; };
+		31C458ADDECF4F0E914AC980 /* ASCEND/DesignSystem/Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC15D6D1274A436D8CFA5CDD /* ASCEND/DesignSystem/Theme.swift */; };
+		328B92032C364BAB998BF939 /* ASCEND/DesignSystem/Components/SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0D8CCA88C04633AA7A801E /* ASCEND/DesignSystem/Components/SectionHeader.swift */; };
+		44C4C618EAF74929B6A595FD /* ASCEND/Services/Persistence/AppDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5E484330E04DC0BBF09C49 /* ASCEND/Services/Persistence/AppDataStore.swift */; };
+		536FE89F480548CFB95001E8 /* ASCEND/Views/Character/AvatarCustomizerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1719032DE6A74B1994B5944D /* ASCEND/Views/Character/AvatarCustomizerSheet.swift */; };
+		5599B2DFDFF64D0C84C4070F /* ASCEND/DesignSystem/Components/XPBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D93E9E40234E17A564634B /* ASCEND/DesignSystem/Components/XPBadge.swift */; };
+		5816902DE10947338320AD2F /* ASCEND/App/ASCENDApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94B7FB7E1FD420AA5350A41 /* ASCEND/App/ASCENDApp.swift */; };
+		5D0F38B222AC46D1AE32CF72 /* ASCEND/Services/Engines/QuestEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9861C0D9854F689C834EE0 /* ASCEND/Services/Engines/QuestEngine.swift */; };
+		5D66058924B348A0B53DD99C /* ASCEND/Models/SkillModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE0740186764A51920665A1 /* ASCEND/Models/SkillModels.swift */; };
+		65C68031DE064F8C8EA6707E /* ASCEND/Views/Navigation/MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D252D48C32294A88B77F525C /* ASCEND/Views/Navigation/MainTabView.swift */; };
+		6BFD961FF6E348D5970EF3A0 /* ASCEND/App/ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262D26ACBA5E447DA2F50E66 /* ASCEND/App/ContentView.swift */; };
+		6F1D9FC28FC24B82AD62F58E /* ASCEND/Services/Engines/XPEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEE87793F8A478CB05AD781 /* ASCEND/Services/Engines/XPEngine.swift */; };
+		76079095678B46EFA54A8FB6 /* ASCEND/DesignSystem/Components/ParticleFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D21F00437EA4BCF8935A097 /* ASCEND/DesignSystem/Components/ParticleFieldView.swift */; };
+		7E4E590F49004610B285A357 /* ASCEND/Views/Skills/SkillTreesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E19406F3AAF540949ED1BE50 /* ASCEND/Views/Skills/SkillTreesView.swift */; };
+		7EB0BAFD03E847FEA53723D9 /* ASCEND/Services/Engines/PlanningEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DEB2B13A404A2A91FED82D /* ASCEND/Services/Engines/PlanningEngine.swift */; };
+		84717859EB6D419EBE42E5B7 /* ASCEND/Views/DailyPlan/FocusTimerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2F82A869D47435D8BE23C20 /* ASCEND/Views/DailyPlan/FocusTimerSheet.swift */; };
+		870E459F161040F0BF1E8600 /* ASCEND/Models/CharacterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AC6D5A73884AAD8725FBFC /* ASCEND/Models/CharacterModels.swift */; };
+		8DE890409B12459EB886A5A1 /* ASCEND/Services/Engines/SkillEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BD29EB55D4A988BA77D32 /* ASCEND/Services/Engines/SkillEngine.swift */; };
+		9302871CE24B483AB05F4A11 /* ASCEND/Views/Quests/QuestEditorSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B973635F4F9D41A3A8FDC447 /* ASCEND/Views/Quests/QuestEditorSheet.swift */; };
+		939802ADA05C49A9BFF10FB2 /* ASCEND/DesignSystem/Components/StatRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B5F404F8A445988CBB06A9 /* ASCEND/DesignSystem/Components/StatRing.swift */; };
+		95C2230DE3F2403B930C78C8 /* ASCEND/Models/WorldModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48BE832439E4D79BC111877 /* ASCEND/Models/WorldModels.swift */; };
+		99492409BC1D4B93AACD6C61 /* ASCEND/Views/Quests/QuestDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6AB47B7C57A4146AA9F3384 /* ASCEND/Views/Quests/QuestDetailSheet.swift */; };
+		9CFDA9C9BCE5876E7AE413BD /* ASCEND/Services/Engines/ChallengeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D675E452045BE42910B6F2A /* ASCEND/Services/Engines/ChallengeEngine.swift */; };
+		9D8E625B9F40406FA8FA6602 /* ASCEND/Views/Character/AchievementArchiveSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FDF70C74BC5418196656BA8 /* ASCEND/Views/Character/AchievementArchiveSheet.swift */; };
+		AFB773771BE44BBAB3403424 /* ASCEND/Views/Character/CharacterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8AFF01AA41483488672D97 /* ASCEND/Views/Character/CharacterView.swift */; };
+		B1C542AE842F4C8C8F18342C /* ASCEND/Services/Engines/WorldEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BF1DE6109449469A33FDEA /* ASCEND/Services/Engines/WorldEngine.swift */; };
+		B6C7C8D7283340D1A7A18D40 /* ASCEND/Resources/Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57BD35529EE405BB737F0EA /* ASCEND/Resources/Assets.xcassets */; };
+		B89969FAF20500DD09EF0E9E /* ASCEND/Models/ChallengeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA855BF44768A7E466674C0 /* ASCEND/Models/ChallengeModels.swift */; };
+		BB786FBFA01047EF9E2257E2 /* ASCEND/DesignSystem/Components/GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5617C6050E9D40F48C8DAC6A /* ASCEND/DesignSystem/Components/GlassCard.swift */; };
+		BF5FD635BCBC49DD90C945FF /* ASCEND/Models/XPModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40759E5148534732A9637140 /* ASCEND/Models/XPModels.swift */; };
+		CDE81FE27B1B4A79A02E588F /* ASCEND/Views/Onboarding/OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65C40A5E83645E0A51FF4FC /* ASCEND/Views/Onboarding/OnboardingFlowView.swift */; };
+		D490B2A99DBF2E3F1577F7CA /* ASCEND/Views/DailyPlan/WeeklyPlanImportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989F41E9895139F92A101F34 /* ASCEND/Views/DailyPlan/WeeklyPlanImportSheet.swift */; };
+		D5520BB2F6244AFE9E7676F3 /* ASCEND/Models/QuestModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC9CFFE5004EBE9014D21D /* ASCEND/Models/QuestModels.swift */; };
+		D92525791DF5D7A6381A2556 /* ASCEND/Views/Challenge/Challenge75View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53A33017A0F55E0D2E953356 /* ASCEND/Views/Challenge/Challenge75View.swift */; };
+		EA5F318F5A05486DA70196F9 /* ASCEND/Views/World/WorldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816AAEC41FD54F7F8E329168 /* ASCEND/Views/World/WorldView.swift */; };
+		F0C050010000000000000001 /* ASCEND/Services/Engines/FocusSessionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C050010000000000000002 /* ASCEND/Services/Engines/FocusSessionEngine.swift */; };
+		F0C05002000000000000000A /* ASCEND/Services/AI/OnlinePlanningService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C05001000000000000000A /* ASCEND/Services/AI/OnlinePlanningService.swift */; };
+		F0C05002000000000000000B /* ASCEND/Services/Cloud/CloudSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C05001000000000000000B /* ASCEND/Services/Cloud/CloudSyncService.swift */; };
+		F0C05002000000000000000C /* ASCEND/Views/Settings/OnlineServicesSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C05001000000000000000C /* ASCEND/Views/Settings/OnlineServicesSheet.swift */; };
+		F1FC589DE6AE4239B6AC0750 /* ASCEND/Models/FutureSelfModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F79A9172B854BACB5D66ACD /* ASCEND/Models/FutureSelfModels.swift */; };
+		F88C0BE70B9246E59E8811D5 /* ASCEND/Views/DailyPlan/DailyPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA58F02A750496C82F51EC7 /* ASCEND/Views/DailyPlan/DailyPlanView.swift */; };
+		FC7136F322F44FB7B8D282DC /* ASCEND/Views/DailyPlan/DailyRecapSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E18ED803B70457E94D4FBB5 /* ASCEND/Views/DailyPlan/DailyRecapSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BC15D6D1274A436D8CFA5CDD /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/DesignSystem/Theme.swift"; sourceTree = "<group>"; };
-		F03B085F74644CFE89334AFF /* GlowingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/DesignSystem/Components/GlowingButton.swift"; sourceTree = "<group>"; };
-		5617C6050E9D40F48C8DAC6A /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/DesignSystem/Components/GlassCard.swift"; sourceTree = "<group>"; };
-		98B5F404F8A445988CBB06A9 /* StatRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/DesignSystem/Components/StatRing.swift"; sourceTree = "<group>"; };
-		7D21F00437EA4BCF8935A097 /* ParticleFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/DesignSystem/Components/ParticleFieldView.swift"; sourceTree = "<group>"; };
-		58D93E9E40234E17A564634B /* XPBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/DesignSystem/Components/XPBadge.swift"; sourceTree = "<group>"; };
-		6C0D8CCA88C04633AA7A801E /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/DesignSystem/Components/SectionHeader.swift"; sourceTree = "<group>"; };
-		C94B7FB7E1FD420AA5350A41 /* ASCENDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/App/ASCENDApp.swift"; sourceTree = "<group>"; };
-		262D26ACBA5E447DA2F50E66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/App/ContentView.swift"; sourceTree = "<group>"; };
-		C48BE832439E4D79BC111877 /* WorldModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Models/WorldModels.swift"; sourceTree = "<group>"; };
-		24AC6D5A73884AAD8725FBFC /* CharacterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Models/CharacterModels.swift"; sourceTree = "<group>"; };
-		9F79A9172B854BACB5D66ACD /* FutureSelfModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Models/FutureSelfModels.swift"; sourceTree = "<group>"; };
-		4CDC9CFFE5004EBE9014D21D /* QuestModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Models/QuestModels.swift"; sourceTree = "<group>"; };
-		9BE0740186764A51920665A1 /* SkillModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Models/SkillModels.swift"; sourceTree = "<group>"; };
-		C4F0D30B93BB4CA6ADCFEE98 /* AchievementModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Models/AchievementModels.swift"; sourceTree = "<group>"; };
-		0FF8E45ED7714B7282C44122 /* PlanningModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Models/PlanningModels.swift"; sourceTree = "<group>"; };
-		40759E5148534732A9637140 /* XPModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Models/XPModels.swift"; sourceTree = "<group>"; };
-		D6AB47B7C57A4146AA9F3384 /* QuestDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Quests/QuestDetailSheet.swift"; sourceTree = "<group>"; };
-		C6274339D6EB49209E6D9C01 /* QuestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Quests/QuestsView.swift"; sourceTree = "<group>"; };
-		B973635F4F9D41A3A8FDC447 /* QuestEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Quests/QuestEditorSheet.swift"; sourceTree = "<group>"; };
-		8E20BE89F2B74A8085073C65 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Settings/SettingsView.swift"; sourceTree = "<group>"; };
-		6FDF70C74BC5418196656BA8 /* AchievementArchiveSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Character/AchievementArchiveSheet.swift"; sourceTree = "<group>"; };
-		1719032DE6A74B1994B5944D /* AvatarCustomizerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Character/AvatarCustomizerSheet.swift"; sourceTree = "<group>"; };
-		4F8AFF01AA41483488672D97 /* CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Character/CharacterView.swift"; sourceTree = "<group>"; };
-		5E18ED803B70457E94D4FBB5 /* DailyRecapSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/DailyPlan/DailyRecapSheet.swift"; sourceTree = "<group>"; };
-		3EA58F02A750496C82F51EC7 /* DailyPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/DailyPlan/DailyPlanView.swift"; sourceTree = "<group>"; };
-		D2F82A869D47435D8BE23C20 /* FocusTimerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/DailyPlan/FocusTimerSheet.swift"; sourceTree = "<group>"; };
-		D252D48C32294A88B77F525C /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Navigation/MainTabView.swift"; sourceTree = "<group>"; };
-		816AAEC41FD54F7F8E329168 /* WorldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/World/WorldView.swift"; sourceTree = "<group>"; };
-		EBC30BAF12BB466788B70D84 /* RegionDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/World/RegionDetailSheet.swift"; sourceTree = "<group>"; };
-		E19406F3AAF540949ED1BE50 /* SkillTreesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Skills/SkillTreesView.swift"; sourceTree = "<group>"; };
-		308C91CDABAD4561968ABD49 /* SkillNodeDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Skills/SkillNodeDetailSheet.swift"; sourceTree = "<group>"; };
-		F65C40A5E83645E0A51FF4FC /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Views/Onboarding/OnboardingFlowView.swift"; sourceTree = "<group>"; };
-		EAB70BA5CA114F1481FED78A /* HapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Services/Utilities/HapticService.swift"; sourceTree = "<group>"; };
-		0DEE87793F8A478CB05AD781 /* XPEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Services/Engines/XPEngine.swift"; sourceTree = "<group>"; };
-		84DEB2B13A404A2A91FED82D /* PlanningEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Services/Engines/PlanningEngine.swift"; sourceTree = "<group>"; };
-		B329DF521B1249B9A0380A67 /* FutureSelfEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Services/Engines/FutureSelfEngine.swift"; sourceTree = "<group>"; };
-		E0BF1DE6109449469A33FDEA /* WorldEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Services/Engines/WorldEngine.swift"; sourceTree = "<group>"; };
-		AE9861C0D9854F689C834EE0 /* QuestEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Services/Engines/QuestEngine.swift"; sourceTree = "<group>"; };
-		498BD29EB55D4A988BA77D32 /* SkillEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Services/Engines/SkillEngine.swift"; sourceTree = "<group>"; };
-		99312E5CC59F4E369FB196F5 /* PlanningAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Services/AI/PlanningAIService.swift"; sourceTree = "<group>"; };
-		0B5E484330E04DC0BBF09C49 /* AppDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ASCEND/Services/Persistence/AppDataStore.swift"; sourceTree = "<group>"; };
-		4282B04165444E43A840831F /* ASCEND.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ASCEND.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C4DDEBFE6A8A450893FAAD7B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ASCEND/Resources/Info.plist"; sourceTree = "<group>"; };
-		C57BD35529EE405BB737F0EA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "ASCEND/Resources/Assets.xcassets"; sourceTree = "<group>"; };
+		0B5E484330E04DC0BBF09C49 /* ASCEND/Services/Persistence/AppDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Persistence/AppDataStore.swift; sourceTree = "<group>"; };
+		0DEE87793F8A478CB05AD781 /* ASCEND/Services/Engines/XPEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Engines/XPEngine.swift; sourceTree = "<group>"; };
+		0FF8E45ED7714B7282C44122 /* ASCEND/Models/PlanningModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/PlanningModels.swift; sourceTree = "<group>"; };
+		1719032DE6A74B1994B5944D /* ASCEND/Views/Character/AvatarCustomizerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Character/AvatarCustomizerSheet.swift; sourceTree = "<group>"; };
+		24AC6D5A73884AAD8725FBFC /* ASCEND/Models/CharacterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/CharacterModels.swift; sourceTree = "<group>"; };
+		262D26ACBA5E447DA2F50E66 /* ASCEND/App/ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/App/ContentView.swift; sourceTree = "<group>"; };
+		308C91CDABAD4561968ABD49 /* ASCEND/Views/Skills/SkillNodeDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Skills/SkillNodeDetailSheet.swift; sourceTree = "<group>"; };
+		3EA58F02A750496C82F51EC7 /* ASCEND/Views/DailyPlan/DailyPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/DailyPlan/DailyPlanView.swift; sourceTree = "<group>"; };
+		40759E5148534732A9637140 /* ASCEND/Models/XPModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/XPModels.swift; sourceTree = "<group>"; };
+		4282B04165444E43A840831F /* Novara.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Novara.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4977872CEB4CC38CEC8DC483 /* ASCEND/Services/Engines/WeeklyPlanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Engines/WeeklyPlanEngine.swift; sourceTree = "<group>"; };
+		498BD29EB55D4A988BA77D32 /* ASCEND/Services/Engines/SkillEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Engines/SkillEngine.swift; sourceTree = "<group>"; };
+		4CDC9CFFE5004EBE9014D21D /* ASCEND/Models/QuestModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/QuestModels.swift; sourceTree = "<group>"; };
+		4F8AFF01AA41483488672D97 /* ASCEND/Views/Character/CharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Character/CharacterView.swift; sourceTree = "<group>"; };
+		53A33017A0F55E0D2E953356 /* ASCEND/Views/Challenge/Challenge75View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Challenge/Challenge75View.swift; sourceTree = "<group>"; };
+		5617C6050E9D40F48C8DAC6A /* ASCEND/DesignSystem/Components/GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/DesignSystem/Components/GlassCard.swift; sourceTree = "<group>"; };
+		58D93E9E40234E17A564634B /* ASCEND/DesignSystem/Components/XPBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/DesignSystem/Components/XPBadge.swift; sourceTree = "<group>"; };
+		5E18ED803B70457E94D4FBB5 /* ASCEND/Views/DailyPlan/DailyRecapSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/DailyPlan/DailyRecapSheet.swift; sourceTree = "<group>"; };
+		6C0D8CCA88C04633AA7A801E /* ASCEND/DesignSystem/Components/SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/DesignSystem/Components/SectionHeader.swift; sourceTree = "<group>"; };
+		6D675E452045BE42910B6F2A /* ASCEND/Services/Engines/ChallengeEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Engines/ChallengeEngine.swift; sourceTree = "<group>"; };
+		6FDF70C74BC5418196656BA8 /* ASCEND/Views/Character/AchievementArchiveSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Character/AchievementArchiveSheet.swift; sourceTree = "<group>"; };
+		7CA855BF44768A7E466674C0 /* ASCEND/Models/ChallengeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/ChallengeModels.swift; sourceTree = "<group>"; };
+		7D21F00437EA4BCF8935A097 /* ASCEND/DesignSystem/Components/ParticleFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/DesignSystem/Components/ParticleFieldView.swift; sourceTree = "<group>"; };
+		816AAEC41FD54F7F8E329168 /* ASCEND/Views/World/WorldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/World/WorldView.swift; sourceTree = "<group>"; };
+		84DEB2B13A404A2A91FED82D /* ASCEND/Services/Engines/PlanningEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Engines/PlanningEngine.swift; sourceTree = "<group>"; };
+		8E20BE89F2B74A8085073C65 /* ASCEND/Views/Settings/SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Settings/SettingsView.swift; sourceTree = "<group>"; };
+		989F41E9895139F92A101F34 /* ASCEND/Views/DailyPlan/WeeklyPlanImportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/DailyPlan/WeeklyPlanImportSheet.swift; sourceTree = "<group>"; };
+		98B5F404F8A445988CBB06A9 /* ASCEND/DesignSystem/Components/StatRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/DesignSystem/Components/StatRing.swift; sourceTree = "<group>"; };
+		99312E5CC59F4E369FB196F5 /* ASCEND/Services/AI/PlanningAIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/AI/PlanningAIService.swift; sourceTree = "<group>"; };
+		9BE0740186764A51920665A1 /* ASCEND/Models/SkillModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/SkillModels.swift; sourceTree = "<group>"; };
+		9F79A9172B854BACB5D66ACD /* ASCEND/Models/FutureSelfModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/FutureSelfModels.swift; sourceTree = "<group>"; };
+		AE9861C0D9854F689C834EE0 /* ASCEND/Services/Engines/QuestEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Engines/QuestEngine.swift; sourceTree = "<group>"; };
+		B329DF521B1249B9A0380A67 /* ASCEND/Services/Engines/FutureSelfEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Engines/FutureSelfEngine.swift; sourceTree = "<group>"; };
+		B973635F4F9D41A3A8FDC447 /* ASCEND/Views/Quests/QuestEditorSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Quests/QuestEditorSheet.swift; sourceTree = "<group>"; };
+		BC15D6D1274A436D8CFA5CDD /* ASCEND/DesignSystem/Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/DesignSystem/Theme.swift; sourceTree = "<group>"; };
+		C48BE832439E4D79BC111877 /* ASCEND/Models/WorldModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/WorldModels.swift; sourceTree = "<group>"; };
+		C4DDEBFE6A8A450893FAAD7B /* ASCEND/Resources/Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ASCEND/Resources/Info.plist; sourceTree = "<group>"; };
+		C4F0D30B93BB4CA6ADCFEE98 /* ASCEND/Models/AchievementModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/AchievementModels.swift; sourceTree = "<group>"; };
+		C57BD35529EE405BB737F0EA /* ASCEND/Resources/Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ASCEND/Resources/Assets.xcassets; sourceTree = "<group>"; };
+		C6274339D6EB49209E6D9C01 /* ASCEND/Views/Quests/QuestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Quests/QuestsView.swift; sourceTree = "<group>"; };
+		C94B7FB7E1FD420AA5350A41 /* ASCEND/App/ASCENDApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/App/ASCENDApp.swift; sourceTree = "<group>"; };
+		D252D48C32294A88B77F525C /* ASCEND/Views/Navigation/MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Navigation/MainTabView.swift; sourceTree = "<group>"; };
+		D2F82A869D47435D8BE23C20 /* ASCEND/Views/DailyPlan/FocusTimerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/DailyPlan/FocusTimerSheet.swift; sourceTree = "<group>"; };
+		D6AB47B7C57A4146AA9F3384 /* ASCEND/Views/Quests/QuestDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Quests/QuestDetailSheet.swift; sourceTree = "<group>"; };
+		DA6D22E8AA154D28C634E50B /* ASCEND/Models/WeeklyPlanModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Models/WeeklyPlanModels.swift; sourceTree = "<group>"; };
+		E0BF1DE6109449469A33FDEA /* ASCEND/Services/Engines/WorldEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Engines/WorldEngine.swift; sourceTree = "<group>"; };
+		E19406F3AAF540949ED1BE50 /* ASCEND/Views/Skills/SkillTreesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Skills/SkillTreesView.swift; sourceTree = "<group>"; };
+		EAB70BA5CA114F1481FED78A /* ASCEND/Services/Utilities/HapticService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Utilities/HapticService.swift; sourceTree = "<group>"; };
+		EBC30BAF12BB466788B70D84 /* ASCEND/Views/World/RegionDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/World/RegionDetailSheet.swift; sourceTree = "<group>"; };
+		F03B085F74644CFE89334AFF /* ASCEND/DesignSystem/Components/GlowingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/DesignSystem/Components/GlowingButton.swift; sourceTree = "<group>"; };
+		F0C050010000000000000002 /* ASCEND/Services/Engines/FocusSessionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Engines/FocusSessionEngine.swift; sourceTree = "<group>"; };
+		F0C05001000000000000000A /* ASCEND/Services/AI/OnlinePlanningService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/AI/OnlinePlanningService.swift; sourceTree = "<group>"; };
+		F0C05001000000000000000B /* ASCEND/Services/Cloud/CloudSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Services/Cloud/CloudSyncService.swift; sourceTree = "<group>"; };
+		F0C05001000000000000000C /* ASCEND/Views/Settings/OnlineServicesSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Settings/OnlineServicesSheet.swift; sourceTree = "<group>"; };
+		F65C40A5E83645E0A51FF4FC /* ASCEND/Views/Onboarding/OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ASCEND/Views/Onboarding/OnboardingFlowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		F626758518A8473E975A67D5 = {
+		191C73938C824B62BC862402 /* . */ = {
 			isa = PBXGroup;
 			children = (
-				191C73938C824B62BC862402 /* ASCEND */,
-				5F3FF956ECF14508BD645436 /* Products */,
+				BC15D6D1274A436D8CFA5CDD /* ASCEND/DesignSystem/Theme.swift */,
+				F03B085F74644CFE89334AFF /* ASCEND/DesignSystem/Components/GlowingButton.swift */,
+				5617C6050E9D40F48C8DAC6A /* ASCEND/DesignSystem/Components/GlassCard.swift */,
+				98B5F404F8A445988CBB06A9 /* ASCEND/DesignSystem/Components/StatRing.swift */,
+				7D21F00437EA4BCF8935A097 /* ASCEND/DesignSystem/Components/ParticleFieldView.swift */,
+				58D93E9E40234E17A564634B /* ASCEND/DesignSystem/Components/XPBadge.swift */,
+				6C0D8CCA88C04633AA7A801E /* ASCEND/DesignSystem/Components/SectionHeader.swift */,
+				C94B7FB7E1FD420AA5350A41 /* ASCEND/App/ASCENDApp.swift */,
+				262D26ACBA5E447DA2F50E66 /* ASCEND/App/ContentView.swift */,
+				C48BE832439E4D79BC111877 /* ASCEND/Models/WorldModels.swift */,
+				24AC6D5A73884AAD8725FBFC /* ASCEND/Models/CharacterModels.swift */,
+				9F79A9172B854BACB5D66ACD /* ASCEND/Models/FutureSelfModels.swift */,
+				4CDC9CFFE5004EBE9014D21D /* ASCEND/Models/QuestModels.swift */,
+				9BE0740186764A51920665A1 /* ASCEND/Models/SkillModels.swift */,
+				C4F0D30B93BB4CA6ADCFEE98 /* ASCEND/Models/AchievementModels.swift */,
+				0FF8E45ED7714B7282C44122 /* ASCEND/Models/PlanningModels.swift */,
+				40759E5148534732A9637140 /* ASCEND/Models/XPModels.swift */,
+				D6AB47B7C57A4146AA9F3384 /* ASCEND/Views/Quests/QuestDetailSheet.swift */,
+				C6274339D6EB49209E6D9C01 /* ASCEND/Views/Quests/QuestsView.swift */,
+				B973635F4F9D41A3A8FDC447 /* ASCEND/Views/Quests/QuestEditorSheet.swift */,
+				8E20BE89F2B74A8085073C65 /* ASCEND/Views/Settings/SettingsView.swift */,
+				6FDF70C74BC5418196656BA8 /* ASCEND/Views/Character/AchievementArchiveSheet.swift */,
+				1719032DE6A74B1994B5944D /* ASCEND/Views/Character/AvatarCustomizerSheet.swift */,
+				4F8AFF01AA41483488672D97 /* ASCEND/Views/Character/CharacterView.swift */,
+				5E18ED803B70457E94D4FBB5 /* ASCEND/Views/DailyPlan/DailyRecapSheet.swift */,
+				3EA58F02A750496C82F51EC7 /* ASCEND/Views/DailyPlan/DailyPlanView.swift */,
+				D2F82A869D47435D8BE23C20 /* ASCEND/Views/DailyPlan/FocusTimerSheet.swift */,
+				D252D48C32294A88B77F525C /* ASCEND/Views/Navigation/MainTabView.swift */,
+				816AAEC41FD54F7F8E329168 /* ASCEND/Views/World/WorldView.swift */,
+				EBC30BAF12BB466788B70D84 /* ASCEND/Views/World/RegionDetailSheet.swift */,
+				E19406F3AAF540949ED1BE50 /* ASCEND/Views/Skills/SkillTreesView.swift */,
+				308C91CDABAD4561968ABD49 /* ASCEND/Views/Skills/SkillNodeDetailSheet.swift */,
+				F65C40A5E83645E0A51FF4FC /* ASCEND/Views/Onboarding/OnboardingFlowView.swift */,
+				EAB70BA5CA114F1481FED78A /* ASCEND/Services/Utilities/HapticService.swift */,
+				0DEE87793F8A478CB05AD781 /* ASCEND/Services/Engines/XPEngine.swift */,
+				84DEB2B13A404A2A91FED82D /* ASCEND/Services/Engines/PlanningEngine.swift */,
+				B329DF521B1249B9A0380A67 /* ASCEND/Services/Engines/FutureSelfEngine.swift */,
+				E0BF1DE6109449469A33FDEA /* ASCEND/Services/Engines/WorldEngine.swift */,
+				AE9861C0D9854F689C834EE0 /* ASCEND/Services/Engines/QuestEngine.swift */,
+				498BD29EB55D4A988BA77D32 /* ASCEND/Services/Engines/SkillEngine.swift */,
+				99312E5CC59F4E369FB196F5 /* ASCEND/Services/AI/PlanningAIService.swift */,
+				0B5E484330E04DC0BBF09C49 /* ASCEND/Services/Persistence/AppDataStore.swift */,
+				C4DDEBFE6A8A450893FAAD7B /* ASCEND/Resources/Info.plist */,
+				C57BD35529EE405BB737F0EA /* ASCEND/Resources/Assets.xcassets */,
 			);
+			path = .;
 			sourceTree = "<group>";
 		};
 		5F3FF956ECF14508BD645436 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4282B04165444E43A840831F /* ASCEND.app */,
+				4282B04165444E43A840831F /* Novara.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		191C73938C824B62BC862402 /* ASCEND */ = {
+		F626758518A8473E975A67D5 = {
 			isa = PBXGroup;
 			children = (
-				BC15D6D1274A436D8CFA5CDD /* Theme.swift */,
-				F03B085F74644CFE89334AFF /* GlowingButton.swift */,
-				5617C6050E9D40F48C8DAC6A /* GlassCard.swift */,
-				98B5F404F8A445988CBB06A9 /* StatRing.swift */,
-				7D21F00437EA4BCF8935A097 /* ParticleFieldView.swift */,
-				58D93E9E40234E17A564634B /* XPBadge.swift */,
-				6C0D8CCA88C04633AA7A801E /* SectionHeader.swift */,
-				C94B7FB7E1FD420AA5350A41 /* ASCENDApp.swift */,
-				262D26ACBA5E447DA2F50E66 /* ContentView.swift */,
-				C48BE832439E4D79BC111877 /* WorldModels.swift */,
-				24AC6D5A73884AAD8725FBFC /* CharacterModels.swift */,
-				9F79A9172B854BACB5D66ACD /* FutureSelfModels.swift */,
-				4CDC9CFFE5004EBE9014D21D /* QuestModels.swift */,
-				9BE0740186764A51920665A1 /* SkillModels.swift */,
-				C4F0D30B93BB4CA6ADCFEE98 /* AchievementModels.swift */,
-				0FF8E45ED7714B7282C44122 /* PlanningModels.swift */,
-				40759E5148534732A9637140 /* XPModels.swift */,
-				D6AB47B7C57A4146AA9F3384 /* QuestDetailSheet.swift */,
-				C6274339D6EB49209E6D9C01 /* QuestsView.swift */,
-				B973635F4F9D41A3A8FDC447 /* QuestEditorSheet.swift */,
-				8E20BE89F2B74A8085073C65 /* SettingsView.swift */,
-				6FDF70C74BC5418196656BA8 /* AchievementArchiveSheet.swift */,
-				1719032DE6A74B1994B5944D /* AvatarCustomizerSheet.swift */,
-				4F8AFF01AA41483488672D97 /* CharacterView.swift */,
-				5E18ED803B70457E94D4FBB5 /* DailyRecapSheet.swift */,
-				3EA58F02A750496C82F51EC7 /* DailyPlanView.swift */,
-				D2F82A869D47435D8BE23C20 /* FocusTimerSheet.swift */,
-				D252D48C32294A88B77F525C /* MainTabView.swift */,
-				816AAEC41FD54F7F8E329168 /* WorldView.swift */,
-				EBC30BAF12BB466788B70D84 /* RegionDetailSheet.swift */,
-				E19406F3AAF540949ED1BE50 /* SkillTreesView.swift */,
-				308C91CDABAD4561968ABD49 /* SkillNodeDetailSheet.swift */,
-				F65C40A5E83645E0A51FF4FC /* OnboardingFlowView.swift */,
-				EAB70BA5CA114F1481FED78A /* HapticService.swift */,
-				0DEE87793F8A478CB05AD781 /* XPEngine.swift */,
-				84DEB2B13A404A2A91FED82D /* PlanningEngine.swift */,
-				B329DF521B1249B9A0380A67 /* FutureSelfEngine.swift */,
-				E0BF1DE6109449469A33FDEA /* WorldEngine.swift */,
-				AE9861C0D9854F689C834EE0 /* QuestEngine.swift */,
-				498BD29EB55D4A988BA77D32 /* SkillEngine.swift */,
-				99312E5CC59F4E369FB196F5 /* PlanningAIService.swift */,
-				0B5E484330E04DC0BBF09C49 /* AppDataStore.swift */,
-				C4DDEBFE6A8A450893FAAD7B /* Info.plist */,
-				C57BD35529EE405BB737F0EA /* Assets.xcassets */,
+				F0C05001000000000000000C /* ASCEND/Views/Settings/OnlineServicesSheet.swift */,
+				F0C05001000000000000000B /* ASCEND/Services/Cloud/CloudSyncService.swift */,
+				F0C05001000000000000000A /* ASCEND/Services/AI/OnlinePlanningService.swift */,
+				F0C050010000000000000002 /* ASCEND/Services/Engines/FocusSessionEngine.swift */,
+				989F41E9895139F92A101F34 /* ASCEND/Views/DailyPlan/WeeklyPlanImportSheet.swift */,
+				4977872CEB4CC38CEC8DC483 /* ASCEND/Services/Engines/WeeklyPlanEngine.swift */,
+				DA6D22E8AA154D28C634E50B /* ASCEND/Models/WeeklyPlanModels.swift */,
+				53A33017A0F55E0D2E953356 /* ASCEND/Views/Challenge/Challenge75View.swift */,
+				6D675E452045BE42910B6F2A /* ASCEND/Services/Engines/ChallengeEngine.swift */,
+				7CA855BF44768A7E466674C0 /* ASCEND/Models/ChallengeModels.swift */,
+				191C73938C824B62BC862402 /* . */,
+				5F3FF956ECF14508BD645436 /* Products */,
 			);
-			path = .;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,8 +213,8 @@
 			dependencies = (
 			);
 			name = ASCEND;
-			productName = ASCEND;
-			productReference = 4282B04165444E43A840831F /* ASCEND.app */;
+			productName = Novara;
+			productReference = 4282B04165444E43A840831F /* Novara.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -224,7 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6C7C8D7283340D1A7A18D40 /* Assets.xcassets in Resources */,
+				B6C7C8D7283340D1A7A18D40 /* ASCEND/Resources/Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,54 +265,83 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31C458ADDECF4F0E914AC980 /* Theme.swift in Sources */,
-				1754EBD176AF41DEB2046FF8 /* GlowingButton.swift in Sources */,
-				BB786FBFA01047EF9E2257E2 /* GlassCard.swift in Sources */,
-				939802ADA05C49A9BFF10FB2 /* StatRing.swift in Sources */,
-				76079095678B46EFA54A8FB6 /* ParticleFieldView.swift in Sources */,
-				5599B2DFDFF64D0C84C4070F /* XPBadge.swift in Sources */,
-				328B92032C364BAB998BF939 /* SectionHeader.swift in Sources */,
-				5816902DE10947338320AD2F /* ASCENDApp.swift in Sources */,
-				6BFD961FF6E348D5970EF3A0 /* ContentView.swift in Sources */,
-				95C2230DE3F2403B930C78C8 /* WorldModels.swift in Sources */,
-				870E459F161040F0BF1E8600 /* CharacterModels.swift in Sources */,
-				F1FC589DE6AE4239B6AC0750 /* FutureSelfModels.swift in Sources */,
-				D5520BB2F6244AFE9E7676F3 /* QuestModels.swift in Sources */,
-				5D66058924B348A0B53DD99C /* SkillModels.swift in Sources */,
-				1AF3A20EBE1B4A75BEBC76E0 /* AchievementModels.swift in Sources */,
-				1B0D5FB7C98F4762B3F4BC17 /* PlanningModels.swift in Sources */,
-				BF5FD635BCBC49DD90C945FF /* XPModels.swift in Sources */,
-				99492409BC1D4B93AACD6C61 /* QuestDetailSheet.swift in Sources */,
-				19C1C52A6D25437C8708864B /* QuestsView.swift in Sources */,
-				9302871CE24B483AB05F4A11 /* QuestEditorSheet.swift in Sources */,
-				13969CACE3D344E489CDCE93 /* SettingsView.swift in Sources */,
-				9D8E625B9F40406FA8FA6602 /* AchievementArchiveSheet.swift in Sources */,
-				536FE89F480548CFB95001E8 /* AvatarCustomizerSheet.swift in Sources */,
-				AFB773771BE44BBAB3403424 /* CharacterView.swift in Sources */,
-				FC7136F322F44FB7B8D282DC /* DailyRecapSheet.swift in Sources */,
-				F88C0BE70B9246E59E8811D5 /* DailyPlanView.swift in Sources */,
-				84717859EB6D419EBE42E5B7 /* FocusTimerSheet.swift in Sources */,
-				65C68031DE064F8C8EA6707E /* MainTabView.swift in Sources */,
-				EA5F318F5A05486DA70196F9 /* WorldView.swift in Sources */,
-				0A95F1A48929444AB1DC4853 /* RegionDetailSheet.swift in Sources */,
-				7E4E590F49004610B285A357 /* SkillTreesView.swift in Sources */,
-				0DC5780C0CBE4B28B0A0F45F /* SkillNodeDetailSheet.swift in Sources */,
-				CDE81FE27B1B4A79A02E588F /* OnboardingFlowView.swift in Sources */,
-				2D20B4EBC9B04B77A23552F9 /* HapticService.swift in Sources */,
-				6F1D9FC28FC24B82AD62F58E /* XPEngine.swift in Sources */,
-				7EB0BAFD03E847FEA53723D9 /* PlanningEngine.swift in Sources */,
-				10821AF515DE46519DBA7BBA /* FutureSelfEngine.swift in Sources */,
-				B1C542AE842F4C8C8F18342C /* WorldEngine.swift in Sources */,
-				5D0F38B222AC46D1AE32CF72 /* QuestEngine.swift in Sources */,
-				8DE890409B12459EB886A5A1 /* SkillEngine.swift in Sources */,
-				17C5FBEDA7184297A11AFE6C /* PlanningAIService.swift in Sources */,
-				44C4C618EAF74929B6A595FD /* AppDataStore.swift in Sources */,
+				F0C05002000000000000000C /* ASCEND/Views/Settings/OnlineServicesSheet.swift in Sources */,
+				F0C05002000000000000000B /* ASCEND/Services/Cloud/CloudSyncService.swift in Sources */,
+				F0C05002000000000000000A /* ASCEND/Services/AI/OnlinePlanningService.swift in Sources */,
+				F0C050010000000000000001 /* ASCEND/Services/Engines/FocusSessionEngine.swift in Sources */,
+				D490B2A99DBF2E3F1577F7CA /* ASCEND/Views/DailyPlan/WeeklyPlanImportSheet.swift in Sources */,
+				06863C935C981A097C87C8A8 /* ASCEND/Services/Engines/WeeklyPlanEngine.swift in Sources */,
+				2CCE43BF9BC08FD218805AA1 /* ASCEND/Models/WeeklyPlanModels.swift in Sources */,
+				D92525791DF5D7A6381A2556 /* ASCEND/Views/Challenge/Challenge75View.swift in Sources */,
+				9CFDA9C9BCE5876E7AE413BD /* ASCEND/Services/Engines/ChallengeEngine.swift in Sources */,
+				B89969FAF20500DD09EF0E9E /* ASCEND/Models/ChallengeModels.swift in Sources */,
+				31C458ADDECF4F0E914AC980 /* ASCEND/DesignSystem/Theme.swift in Sources */,
+				1754EBD176AF41DEB2046FF8 /* ASCEND/DesignSystem/Components/GlowingButton.swift in Sources */,
+				BB786FBFA01047EF9E2257E2 /* ASCEND/DesignSystem/Components/GlassCard.swift in Sources */,
+				939802ADA05C49A9BFF10FB2 /* ASCEND/DesignSystem/Components/StatRing.swift in Sources */,
+				76079095678B46EFA54A8FB6 /* ASCEND/DesignSystem/Components/ParticleFieldView.swift in Sources */,
+				5599B2DFDFF64D0C84C4070F /* ASCEND/DesignSystem/Components/XPBadge.swift in Sources */,
+				328B92032C364BAB998BF939 /* ASCEND/DesignSystem/Components/SectionHeader.swift in Sources */,
+				5816902DE10947338320AD2F /* ASCEND/App/ASCENDApp.swift in Sources */,
+				6BFD961FF6E348D5970EF3A0 /* ASCEND/App/ContentView.swift in Sources */,
+				95C2230DE3F2403B930C78C8 /* ASCEND/Models/WorldModels.swift in Sources */,
+				870E459F161040F0BF1E8600 /* ASCEND/Models/CharacterModels.swift in Sources */,
+				F1FC589DE6AE4239B6AC0750 /* ASCEND/Models/FutureSelfModels.swift in Sources */,
+				D5520BB2F6244AFE9E7676F3 /* ASCEND/Models/QuestModels.swift in Sources */,
+				5D66058924B348A0B53DD99C /* ASCEND/Models/SkillModels.swift in Sources */,
+				1AF3A20EBE1B4A75BEBC76E0 /* ASCEND/Models/AchievementModels.swift in Sources */,
+				1B0D5FB7C98F4762B3F4BC17 /* ASCEND/Models/PlanningModels.swift in Sources */,
+				BF5FD635BCBC49DD90C945FF /* ASCEND/Models/XPModels.swift in Sources */,
+				99492409BC1D4B93AACD6C61 /* ASCEND/Views/Quests/QuestDetailSheet.swift in Sources */,
+				19C1C52A6D25437C8708864B /* ASCEND/Views/Quests/QuestsView.swift in Sources */,
+				9302871CE24B483AB05F4A11 /* ASCEND/Views/Quests/QuestEditorSheet.swift in Sources */,
+				13969CACE3D344E489CDCE93 /* ASCEND/Views/Settings/SettingsView.swift in Sources */,
+				9D8E625B9F40406FA8FA6602 /* ASCEND/Views/Character/AchievementArchiveSheet.swift in Sources */,
+				536FE89F480548CFB95001E8 /* ASCEND/Views/Character/AvatarCustomizerSheet.swift in Sources */,
+				AFB773771BE44BBAB3403424 /* ASCEND/Views/Character/CharacterView.swift in Sources */,
+				FC7136F322F44FB7B8D282DC /* ASCEND/Views/DailyPlan/DailyRecapSheet.swift in Sources */,
+				F88C0BE70B9246E59E8811D5 /* ASCEND/Views/DailyPlan/DailyPlanView.swift in Sources */,
+				84717859EB6D419EBE42E5B7 /* ASCEND/Views/DailyPlan/FocusTimerSheet.swift in Sources */,
+				65C68031DE064F8C8EA6707E /* ASCEND/Views/Navigation/MainTabView.swift in Sources */,
+				EA5F318F5A05486DA70196F9 /* ASCEND/Views/World/WorldView.swift in Sources */,
+				0A95F1A48929444AB1DC4853 /* ASCEND/Views/World/RegionDetailSheet.swift in Sources */,
+				7E4E590F49004610B285A357 /* ASCEND/Views/Skills/SkillTreesView.swift in Sources */,
+				0DC5780C0CBE4B28B0A0F45F /* ASCEND/Views/Skills/SkillNodeDetailSheet.swift in Sources */,
+				CDE81FE27B1B4A79A02E588F /* ASCEND/Views/Onboarding/OnboardingFlowView.swift in Sources */,
+				2D20B4EBC9B04B77A23552F9 /* ASCEND/Services/Utilities/HapticService.swift in Sources */,
+				6F1D9FC28FC24B82AD62F58E /* ASCEND/Services/Engines/XPEngine.swift in Sources */,
+				7EB0BAFD03E847FEA53723D9 /* ASCEND/Services/Engines/PlanningEngine.swift in Sources */,
+				10821AF515DE46519DBA7BBA /* ASCEND/Services/Engines/FutureSelfEngine.swift in Sources */,
+				B1C542AE842F4C8C8F18342C /* ASCEND/Services/Engines/WorldEngine.swift in Sources */,
+				5D0F38B222AC46D1AE32CF72 /* ASCEND/Services/Engines/QuestEngine.swift in Sources */,
+				8DE890409B12459EB886A5A1 /* ASCEND/Services/Engines/SkillEngine.swift in Sources */,
+				17C5FBEDA7184297A11AFE6C /* ASCEND/Services/AI/PlanningAIService.swift in Sources */,
+				44C4C618EAF74929B6A595FD /* ASCEND/Services/Persistence/AppDataStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		269A9C3609E441C78CF87691 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3C38BSH54T;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ASCEND/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chitwandeepkaurpalne.novara;
+				PRODUCT_NAME = Novara;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 		66F679C0BCA648D8878F2F04 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -302,6 +361,25 @@
 			};
 			name = Debug;
 		};
+		C2B16A42C3A6418183AF2DE0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3C38BSH54T;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ASCEND/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chitwandeepkaurpalne.novara;
+				PRODUCT_NAME = Novara;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		FD02BA8B795F4AF4921232CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -320,60 +398,9 @@
 			};
 			name = Release;
 		};
-		269A9C3609E441C78CF87691 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGNING_REQUIRED = NO;
-				CODE_SIGNING_ALLOWED = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "ASCEND/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ascend.app;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		C2B16A42C3A6418183AF2DE0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGNING_REQUIRED = NO;
-				CODE_SIGNING_ALLOWED = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "ASCEND/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ascend.app;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C08704E675CD49D982A58020 /* Build configuration list for PBXProject "ASCEND" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				66F679C0BCA648D8878F2F04 /* Debug */,
-				FD02BA8B795F4AF4921232CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		5AAA62D7369F46E1BBB8753B /* Build configuration list for PBXNativeTarget "ASCEND" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -383,8 +410,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		C08704E675CD49D982A58020 /* Build configuration list for PBXProject "ASCEND" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66F679C0BCA648D8878F2F04 /* Debug */,
+				FD02BA8B795F4AF4921232CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
-
 	};
 	rootObject = 8E6D0E953FB54E5ABE89EFD6 /* Project object */;
 }

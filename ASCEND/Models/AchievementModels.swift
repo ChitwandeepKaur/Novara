@@ -81,7 +81,7 @@ public struct AchievementCatalogue {
             Achievement(
                 id: "ach_first_blood",
                 title: "First Step into the Realm",
-                description: "Completed your very first quest in ASCEND.",
+                description: "Completed your very first quest in Novara.",
                 category: .career,
                 iconName: "flag.fill",
                 rewardedCosmeticId: "aura_whisper"

@@ -16,25 +16,8 @@ public struct AvatarCustomizerSheet: View {
                 
                 VStack(spacing: 20) {
                     // Avatar Live Preview
-                    ZStack {
-                        Circle()
-                            .fill(AscendTheme.primaryGradient.opacity(0.2))
-                            .frame(width: 140, height: 140)
-                            .overlay(
-                                Circle().stroke(AscendTheme.cyberCyan.opacity(0.5), lineWidth: 2)
-                            )
-                        
-                        VStack(spacing: 4) {
-                            Image(systemName: "person.crop.circle.fill")
-                                .resizable()
-                                .frame(width: 80, height: 80)
-                                .foregroundColor(Color(hex: skinTones[store.state.avatar.skinToneIndex % skinTones.count]))
-                            
-                            Text(hairStyles[store.state.avatar.hairStyleIndex % hairStyles.count])
-                                .font(.system(size: 11, weight: .bold))
-                                .foregroundColor(Color(hex: hairColors[store.state.avatar.hairColorIndex % hairColors.count]))
-                        }
-                    }
+                    FairyAvatar(profile: store.state.avatar)
+                        .frame(width: 140, height: 145)
                     .padding(.top, 10)
                     
                     Form {

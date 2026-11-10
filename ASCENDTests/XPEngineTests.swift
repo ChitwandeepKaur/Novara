@@ -10,9 +10,66 @@ public struct XPEngineTests {
         results["testCompletionBonusOneOffRule"] = testCompletionBonusOneOffRule()
         results["testTransactionsAuditableHistory"] = testTransactionsAuditableHistory()
         
+        results["testFairyUnlockBoundaries"] = testFairyUnlockBoundaries()
+        results["testFairyAutoEquipAndSelection"] = testFairyAutoEquipAndSelection()
+        results["testFairyBackupAndLegacyMigration"] = testFairyBackupAndLegacyMigration()
         return results
     }
     
+    private static func testFairyUnlockBoundaries() -> Bool {
+        let order: [FairyPalette] = [.flora, .aisha, .tecna, .musa, .stella, .bloom]
+        guard FairyPalette.allCases == order else { return false }
+        for (index, fairy) in order.enumerated() {
+            let threshold = index * 10_000
+            guard fairy.requiredXP == threshold,
+                  fairy.isUnlocked(totalXP: threshold),
+                  FairyPalette.highestUnlocked(totalXP: threshold) == fairy else { return false }
+            if index > 0 && fairy.isUnlocked(totalXP: threshold - 1) { return false }
+            if index > 0 && FairyPalette.highestUnlocked(totalXP: threshold - 1) != order[index - 1] { return false }
+        }
+        return FairyPalette.highestUnlocked(totalXP: 100_000) == .bloom
+            && FairyPalette.highestUnlocked(totalXP: -1) == .flora
+            && FairyPalette.nextUnlock(totalXP: 50_000) == nil
+            && FairyPalette.nextUnlock(totalXP: 9_999) == .aisha
+    }
+
+    private static func testFairyAutoEquipAndSelection() -> Bool {
+        var state = AppState()
+        guard state.selectedFairy == .flora else { return false }
+        state.avatar.totalCumulativeXP = 9_999
+        XPEngine.shared.awardAchievementXP(amount: 1, achievementKey: "fairy_first", title: "Milestone", in: &state)
+        guard state.selectedFairy == .aisha else { return false }
+        state.selectedFairy = .flora
+        XPEngine.shared.awardEffortXP(minutes: 1, in: &state)
+        guard state.selectedFairy == .flora else { return false }
+        XPEngine.shared.awardCompletionBonusXP(amount: 9_999, questId: UUID(), questTitle: "Next", in: &state)
+        guard state.selectedFairy == .tecna else { return false }
+        state.selectedFairy = .bloom
+        state.updateFairyProgress()
+        guard state.selectedFairy == .tecna else { return false }
+        XPEngine.shared.awardAchievementXP(amount: 40_000, achievementKey: "fairy_jump", title: "Milestones", in: &state)
+        return state.selectedFairy == .bloom && state.avatar.totalCumulativeXP == 60_000
+    }
+
+    private static func testFairyBackupAndLegacyMigration() -> Bool {
+        var state = AppState()
+        state.avatar.totalCumulativeXP = 35_000
+        state.selectedFairy = .aisha
+        do {
+            let data = try JSONEncoder().encode(state)
+            let restored = try JSONDecoder().decode(AppState.self, from: data)
+            guard restored.selectedFairy == .aisha else { return false }
+            var legacy = try JSONSerialization.jsonObject(with: data) as! [String: Any]
+            legacy.removeValue(forKey: "selectedFairy")
+            let migrated = try JSONDecoder().decode(AppState.self, from: JSONSerialization.data(withJSONObject: legacy))
+            guard migrated.selectedFairy == .musa else { return false }
+            var locked = state
+            locked.selectedFairy = .bloom
+            let repaired = try JSONDecoder().decode(AppState.self, from: JSONEncoder().encode(locked))
+            return repaired.selectedFairy == .musa && AppState().selectedFairy == .flora
+        } catch { return false }
+    }
+
     private static func testLevelCalculationCurve() -> Bool {
         let engine = XPEngine.shared
         

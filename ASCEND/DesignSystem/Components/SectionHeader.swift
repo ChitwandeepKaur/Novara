@@ -20,7 +20,7 @@ public struct SectionHeader: View {
                         .font(.system(size: 16, weight: .bold))
                 }
                 Text(title)
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .font(.system(size: 21, weight: .regular, design: .serif))
                     .foregroundColor(AscendTheme.textPrimary)
             }
             if let subtitle = subtitle {

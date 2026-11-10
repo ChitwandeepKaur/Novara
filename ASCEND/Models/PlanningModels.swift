@@ -247,3 +247,43 @@ public struct CustomPlanDraft: Codable, Equatable, Sendable {
     }
 }
 
+
+/// A saved clock-based session. Elapsed time does not depend on background timer ticks.
+public struct ActiveFocusSession: Identifiable, Codable, Equatable, Sendable {
+    public var id: UUID
+    public var dailyQuestId: UUID?
+    public var questTitle: String
+    public var startedAt: Date
+    public var plannedSeconds: Int
+    public var elapsedBeforeRun: TimeInterval
+    public var runStartedAt: Date?
+
+    public init(id: UUID = UUID(), dailyQuestId: UUID? = nil, questTitle: String,
+                plannedSeconds: Int = 1500, now: Date = Date()) {
+        self.id = id
+        self.dailyQuestId = dailyQuestId
+        self.questTitle = AscendText.clean(questTitle)
+        self.startedAt = now
+        self.plannedSeconds = min(10_800, max(60, plannedSeconds))
+        self.elapsedBeforeRun = 0
+        self.runStartedAt = now
+    }
+    public func elapsed(at now: Date = Date()) -> TimeInterval {
+        let running = runStartedAt.map { max(0, now.timeIntervalSince($0)) } ?? 0
+        return min(Double(plannedSeconds), max(0, elapsedBeforeRun) + running)
+    }
+    public func remainingSeconds(at now: Date = Date()) -> Int {
+        max(0, Int(ceil(Double(plannedSeconds) - elapsed(at: now))))
+    }
+    public var deadline: Date? {
+        runStartedAt?.addingTimeInterval(max(0, Double(plannedSeconds) - elapsedBeforeRun))
+    }
+    public mutating func pause(at now: Date = Date()) {
+        elapsedBeforeRun = elapsed(at: now)
+        runStartedAt = nil
+    }
+    public mutating func resume(at now: Date = Date()) {
+        guard runStartedAt == nil, remainingSeconds(at: now) > 0 else { return }
+        runStartedAt = now
+    }
+}

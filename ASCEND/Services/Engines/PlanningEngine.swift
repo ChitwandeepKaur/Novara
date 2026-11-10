@@ -21,7 +21,11 @@ public final class PlanningEngine: Sendable {
         let activeMQ = state.mainQuests.first(where: { $0.status == .active })
         let weights = activeMQ?.priorityDistribution ?? PriorityAllocation(careerWeight: 0.8, fitnessWeight: 0.1, selfCareWeight: 0.1)
         
-        let totalAvailableMinutes = max(60, Int(availableHours * 60))
+        let fullBudget = max(60, Int(availableHours * 60))
+        // Reserve at most a quarter of focus time for temporary goals. Earliest deadline first.
+        let miniTasks = suggestedMiniTasks(for: date, budget: fullBudget / 4, in: state)
+        let miniMinutes = miniTasks.reduce(0) { $0 + $1.estimatedDurationMinutes }
+        let totalAvailableMinutes = fullBudget - miniMinutes
         let careerMinutesBudget = Int(Double(totalAvailableMinutes) * weights.careerWeight)
         let fitnessMinutesBudget = Int(Double(totalAvailableMinutes) * weights.fitnessWeight)
         let selfCareMinutesBudget = max(15, totalAvailableMinutes - careerMinutesBudget - fitnessMinutesBudget)
@@ -32,8 +36,8 @@ public final class PlanningEngine: Sendable {
         // 1. Filter eligible daily tasks whose SubQuest prerequisites are satisfied
         let completedSubQuestIds = Set(state.subQuests.filter { $0.status == .completed }.map { $0.id })
         
-        let eligibleTasks = state.dailyQuests.filter { quest in
-            guard quest.status != .completed && quest.status != .archived else { return false }
+        let eligibleTasks = WeeklyPlanEngine.tasks(on: date, in: state).filter { quest in
+            guard quest.isExternalCommitment != true, quest.isOptional != true, quest.miniQuestId == nil, quest.status != .completed && quest.status != .archived else { return false }
             if let sqId = quest.subQuestId, let sq = state.subQuests.first(where: { $0.id == sqId }) {
                 // If the SubQuest has prerequisites, check if they are all met
                 if !sq.prerequisiteSubQuestIds.isEmpty {
@@ -59,12 +63,15 @@ public final class PlanningEngine: Sendable {
         var selfCareMinutesUsed = 0
         
         for task in sortedTasks {
-            let taskDuration = min(120, max(15, task.estimatedDurationMinutes))
+            let taskDuration = task.weeklyPlanID == nil ? min(120, max(15, task.estimatedDurationMinutes)) : task.estimatedDurationMinutes
             
+            let workUsed = careerMinutesUsed + fitnessMinutesUsed + selfCareMinutesUsed
+            guard workUsed + taskDuration <= totalAvailableMinutes else { continue }
+
             // Check budget allocation
             switch task.category {
             case .career:
-                if careerMinutesUsed + taskDuration > careerMinutesBudget + 30 && careerMinutesUsed > 0 { continue }
+                if task.weeklyPlanID == nil && careerMinutesUsed + taskDuration > careerMinutesBudget + 30 && careerMinutesUsed > 0 { continue }
                 careerMinutesUsed += taskDuration
             case .fitness:
                 if fitnessMinutesUsed + taskDuration > fitnessMinutesBudget + 30 && fitnessMinutesUsed > 0 { continue }
@@ -109,6 +116,8 @@ public final class PlanningEngine: Sendable {
         // 2. Include side quests / habits if not already represented
         for sideQuest in state.sideQuests where sideQuest.status == .inProgress {
             let duration = 20
+            guard careerMinutesUsed + fitnessMinutesUsed + selfCareMinutesUsed + duration <= totalAvailableMinutes else { continue }
+            selfCareMinutesUsed += duration
             let endTime = calendar.date(byAdding: .minute, value: duration, to: currentTime) ?? currentTime
             slots.append(TimeSlot(
                 startTime: currentTime,
@@ -124,6 +133,24 @@ public final class PlanningEngine: Sendable {
             currentTime = endTime
         }
         
+        for task in miniTasks {
+            let end = calendar.date(byAdding: .minute, value: task.estimatedDurationMinutes, to: currentTime) ?? currentTime
+            slots.append(TimeSlot(startTime: currentTime, endTime: end, dailyQuestId: task.id,
+                                  title: task.name, category: task.category,
+                                  notes: "Mini Main Quest • Due \(task.deadline?.formatted(date: .abbreviated, time: .omitted) ?? "soon")"))
+            currentTime = end
+        }
+
+        let externalTasks = WeeklyPlanEngine.tasks(on: date, in: state).filter {
+            $0.isExternalCommitment == true && $0.isOptional != true && !$0.status.isTerminal
+        }
+        for task in externalTasks {
+            let end = calendar.date(byAdding: .minute, value: task.estimatedDurationMinutes, to: currentTime) ?? currentTime
+            slots.append(TimeSlot(startTime: currentTime, endTime: end, dailyQuestId: task.id,
+                                  title: task.name, category: task.category, notes: "Outside core focus budget"))
+            currentTime = end
+        }
+
         return DailyPlan(
             date: date,
             slots: slots,
@@ -235,3 +262,35 @@ public final class PlanningEngine: Sendable {
     }
 }
 
+
+extension PlanningEngine {
+    /// One next unfinished session per active mini quest, bounded by the shared daily budget.
+    public func suggestedMiniTasks(for date: Date, budget: Int, in state: AppState) -> [DailyQuest] {
+        var remaining = budget
+        var result: [DailyQuest] = []
+        let active = state.miniMainQuests.filter { $0.status == .active }.sorted { $0.targetDeadline < $1.targetDeadline }
+        for mini in active {
+            // Completed sessions today already used this quest's daily allocation.
+            if state.dailyQuests.contains(where: { $0.miniQuestId == mini.id && $0.status == .completed && $0.completedAt.map { Calendar.current.isDate($0, inSameDayAs: date) } == true }) { continue }
+            guard let task = state.dailyQuests.first(where: { $0.miniQuestId == mini.id && !$0.status.isTerminal }),
+                  task.estimatedDurationMinutes <= remaining else { continue }
+            result.append(task)
+            remaining -= task.estimatedDurationMinutes
+        }
+        return result
+    }
+
+    /// Add today's mini sessions without moving or deleting any existing appointments.
+    public func appendMiniTasksToCurrentPlan(now: Date = Date(), in state: inout AppState) {
+        guard Calendar.current.isDate(state.dailyPlan.date, inSameDayAs: now) else { return }
+        let used = state.dailyPlan.slots.reduce(0) { $0 + $1.durationMinutes }
+        let budget = max(0, Int(state.dailyPlan.availableWorkingHours * 60) - used)
+        let tasks = suggestedMiniTasks(for: now, budget: min(budget, Int(state.dailyPlan.availableWorkingHours * 15)), in: state)
+        var start = max(now, state.dailyPlan.slots.map { $0.endTime }.max() ?? now)
+        for task in tasks where !state.dailyPlan.slots.contains(where: { $0.dailyQuestId == task.id }) {
+            let end = start.addingTimeInterval(Double(task.estimatedDurationMinutes * 60))
+            state.dailyPlan.slots.append(TimeSlot(startTime: start, endTime: end, dailyQuestId: task.id, title: task.name, category: task.category, notes: "Mini Main Quest"))
+            start = end
+        }
+    }
+}

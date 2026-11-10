@@ -146,7 +146,7 @@ public struct FutureSelfPresets {
                     id: "career_stage_4",
                     stageIndex: 4,
                     title: "The Breakthrough Self",
-                    tagline: "The Offer Landed — The New Reality",
+                    tagline: "The Offer Landed: The New Reality",
                     description: "You have achieved your prime real-life objective: the software engineering offer is secured, cementing your permanent transition.",
                     requiredMilestones: [
                         "milestone_job_offer_secured"

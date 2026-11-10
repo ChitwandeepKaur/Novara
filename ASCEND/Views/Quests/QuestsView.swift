@@ -4,6 +4,7 @@ public struct QuestsView: View {
     @ObservedObject var store: AppDataStore
     
     @State private var showingQuestEditor = false
+    @State private var showingMiniEditor = false
     @State private var selectedQuestIdForDetail: UUID?
     @State private var isDetailSubQuest = true
     @State private var showingArchiveSheet = false
@@ -22,6 +23,7 @@ public struct QuestsView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         // 1. Current Main Quest Card
                         renderMainQuestBanner()
+                        miniQuestsSection
                         
                         // 2. Sub Quests (The Core Pathway)
                         renderSubQuestsSection()
@@ -60,6 +62,9 @@ public struct QuestsView: View {
                         .foregroundColor(AscendTheme.electricBlue)
                     }
                 }
+            }
+            .sheet(isPresented: $showingMiniEditor) {
+                MiniQuestEditorSheet(store: store)
             }
             .sheet(isPresented: $showingQuestEditor) {
                 QuestEditorSheet(store: store)
@@ -209,7 +214,7 @@ public struct QuestsView: View {
                 icon: "arrow.triangle.branch"
             )
             
-            let subQuests = store.state.subQuests
+            let subQuests = store.state.subQuests.filter { $0.miniQuestId == nil }
             if subQuests.isEmpty {
                 GlassCard {
                     Text("No Sub Quests yet. Tap '+ Add' to break down your main goal.")
@@ -384,5 +389,157 @@ public struct QuestArchiveView: View {
                 }
             }
         }
+    }
+}
+
+extension QuestsView {
+    private var miniQuestsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            SectionHeader(title: "Mini Main Quests", subtitle: "Temporary goals alongside your main journey", icon: "calendar.badge.flag")
+            Button { showingMiniEditor = true } label: {
+                Label("Add Mini Main Quest", systemImage: "plus.circle.fill")
+                    .foregroundColor(AscendTheme.cyberCyan)
+            }
+            if store.state.miniMainQuests.isEmpty {
+                Text("Have something to finish by Christmas, a trip, or another date? Add your outcomes and we'll break them into focused sessions.")
+                    .font(.subheadline).foregroundColor(AscendTheme.textSecondary)
+            }
+            ForEach(store.state.miniMainQuests) { mini in
+                miniQuestCard(mini)
+            }
+        }
+    }
+
+    private func miniQuestCard(_ mini: MiniMainQuest) -> some View {
+        let tasks = store.state.dailyQuests.filter { $0.miniQuestId == mini.id }
+        let completed = tasks.filter { $0.status == .completed }.count
+        return GlassCard {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(mini.title).font(.headline).foregroundColor(AscendTheme.textPrimary)
+                Text("Due \(mini.targetDeadline.formatted(date: .abbreviated, time: .omitted)) • \(mini.status.rawValue)")
+                    .font(.caption).foregroundColor(AscendTheme.cyberCyan)
+                Text("\(completed)/\(tasks.count) sessions completed")
+                    .font(.caption).foregroundColor(AscendTheme.textSecondary)
+                ProgressView(value: Double(completed), total: Double(max(1, tasks.count)))
+                if mini.status == .active && mini.targetDeadline < Date() {
+                    Text("Past your target date: your progress is safe. Keep going at your own pace.")
+                        .font(.caption).foregroundColor(AscendTheme.metallicGold)
+                }
+                ForEach(store.state.subQuests.filter { $0.miniQuestId == mini.id }) { milestone in
+                    Label(milestone.title, systemImage: milestone.status == .completed ? "checkmark.circle.fill" : "flag")
+                        .font(.subheadline).foregroundColor(AscendTheme.textPrimary)
+                }
+                DisclosureGroup("View sessions") {
+                    ForEach(tasks) { task in
+                        VStack(alignment: .leading, spacing: 3) {
+                            Label(task.name, systemImage: task.status == .completed ? "checkmark.circle.fill" : "circle")
+                            Text("\(task.estimatedDurationMinutes) minutes").font(.caption)
+                        }.foregroundColor(AscendTheme.textSecondary).padding(.vertical, 4)
+                    }
+                }.foregroundColor(AscendTheme.cyberCyan)
+                Text("Complete sessions in Plan → Checklist. The next session joins each day's schedule when you generate it.")
+                    .font(.caption).foregroundColor(AscendTheme.textSecondary)
+            }
+        }
+    }
+}
+
+struct MiniQuestEditorSheet: View {
+    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var store: AppDataStore
+    @State private var title = ""
+    @State private var outcomesText = ""
+    @State private var deadline = Calendar.current.date(byAdding: .day, value: 30, to: Date())!
+    @State private var category: QuestCategory = .career
+    @State private var minutes = 30
+    @State private var draft: [DailyQuest] = []
+    @State private var error: String?
+    @State private var saved = false
+    @State private var generating = false
+    @State private var showingOnlineServices = false
+
+    private var maximumSessionMinutes: Int {
+        min(60, max(15, Int(store.state.dailyPlan.availableWorkingHours * 15) / 15 * 15))
+    }
+
+    private var outcomes: [String] {
+        outcomesText.components(separatedBy: .newlines).map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }.filter { !$0.isEmpty }
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                if draft.isEmpty {
+                    Section("Your temporary quest") {
+                        TextField("e.g. Ready by Christmas", text: $title)
+                        DatePicker("Target date", selection: $deadline, in: Calendar.current.startOfDay(for: Date())..., displayedComponents: .date)
+                        Picker("Life domain", selection: $category) {
+                            Text("Career").tag(QuestCategory.career)
+                            Text("Fitness").tag(QuestCategory.fitness)
+                            Text("Self-Care").tag(QuestCategory.selfCare)
+                        }
+                    }
+                    Section {
+                        TextEditor(text: $outcomesText).frame(minHeight: 120)
+                            .accessibilityLabel("Outcomes, one per line")
+                    } header: { Text("What do you want to accomplish? One outcome per line") }
+                    footer: { Text("For example: Finish my portfolio; Make handmade gifts. Put each outcome on its own line.") }
+                    Section {
+                        Text("Free on-device planner").font(.caption)
+                        Button("Cloud sync") { showingOnlineServices = true }
+                        if generating { ProgressView("Preparing your sessions...") }
+                        Stepper("Session length: \(minutes) minutes", value: $minutes, in: 15...maximumSessionMinutes, step: 15)
+                        Button("Generate breakdown") {
+                            generateBreakdown()
+                        }.disabled(generating || title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || outcomes.isEmpty)
+                    }
+                } else {
+                    Section("Review your breakdown") {
+                        Text(title).font(.headline)
+                        Text("Due \(deadline.formatted(date: .abbreviated, time: .omitted))")
+                        Text("Each outcome has planning, focused work, and verification sessions. Edit the session names and durations to match the work you need.")
+                        Text("Up to 25% of daily focus time goes to mini quests, nearest deadline first. Today's existing appointments stay in place; if today is full, generate a new schedule in Plan to make room.")
+                    }
+                    ForEach($draft) { $task in
+                        Section {
+                            TextField("Session", text: $task.name, axis: .vertical)
+                            Text(task.description).font(.caption)
+                            Stepper("\(task.estimatedDurationMinutes) minutes", value: $task.estimatedDurationMinutes, in: 15...maximumSessionMinutes, step: 15)
+                        }
+                    }
+                    Section {
+                        Button("Back to goals") { draft = [] }
+                        Button("Add quest & daily sessions") { save() }
+                            .disabled(draft.contains { $0.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
+                    }
+                }
+            }
+            .navigationTitle("Mini Main Quest")
+            .sheet(isPresented: $showingOnlineServices) { OnlineServicesSheet(store: store) }
+            .onAppear { minutes = min(minutes, maximumSessionMinutes) }
+            .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } } }
+            .alert("Unable to add quest", isPresented: Binding(get: { error != nil }, set: { if !$0 { error = nil } })) {
+                Button("OK") { error = nil }
+            } message: { Text(error ?? "") }
+            .alert("Mini quest added", isPresented: $saved) {
+                Button("Done") { dismiss() }
+            } message: { Text("Your sessions are in Plan → Checklist. Today's schedule gained a session if there was room. Generate a schedule in Plan to balance both quests within your focus hours.") }
+        }
+    }
+
+    private func generateBreakdown() {
+        guard !generating else { return }
+        draft = QuestEngine.shared.miniQuestBreakdown(outcomes: outcomes, category: category, minutes: min(minutes, maximumSessionMinutes))
+    }
+
+    private func save() {
+        do {
+            var state = store.state
+            try QuestEngine.shared.addMiniQuest(title: title, outcomes: outcomes, deadline: deadline, category: category, tasks: draft, in: &state)
+            PlanningEngine.shared.appendMiniTasksToCurrentPlan(in: &state)
+            store.state = state
+            store.saveImmediately()
+            saved = true
+        } catch { self.error = error.localizedDescription }
     }
 }

@@ -244,3 +244,129 @@ public struct CosmeticCatalogue {
     ]
 }
 
+
+/// Fairy affinities unlock from lifetime XP, independently of character level.
+public enum FairyPalette: String, Codable, CaseIterable, Identifiable, Sendable {
+    case flora, aisha, tecna, musa, stella, bloom
+    public var realmName: String {
+        switch self {
+        case .flora: return "The enchanted garden"
+        case .aisha: return "The tidal sanctuary"
+        case .tecna: return "The prismatic atelier"
+        case .musa: return "The midnight symphony"
+        case .stella: return "The solar observatory"
+        case .bloom: return "The dragon flame sanctum"
+        }
+    }
+    public var invitation: String {
+        switch self {
+        case .flora: return "Give your\ndreams roots."
+        case .aisha: return "Find strength\nin your flow."
+        case .tecna: return "Design your\nnext possibility."
+        case .musa: return "Find your\nown rhythm."
+        case .stella: return "Let your\nlight unfold."
+        case .bloom: return "Keep your\ninner fire alive."
+        }
+    }
+    public var designDetails: String {
+        switch self {
+        case .flora: return "Rose petals, climbing vines, and a woodland glow"
+        case .aisha: return "Ocean ripples, pearl droplets, and flowing wings"
+        case .tecna: return "Prismatic circuits, crystal facets, and geometric wings"
+        case .musa: return "Musical staves, sound waves, and midnight shimmer"
+        case .stella: return "Sunbursts, crescent moons, and golden constellations"
+        case .bloom: return "Dragon flame, rising embers, and sapphire light"
+        }
+    }
+    public var particleSymbol: String {
+        switch self {
+        case .flora: return "leaf.fill"
+        case .aisha: return "drop.fill"
+        case .tecna: return "diamond.fill"
+        case .musa: return "music.note"
+        case .stella: return "sparkle"
+        case .bloom: return "flame.fill"
+        }
+    }
+    public var requiredXP: Int { Self.allCases.firstIndex(of: self)! * 10_000 }
+    public func isUnlocked(totalXP: Int) -> Bool { totalXP >= requiredXP }
+    public static func highestUnlocked(totalXP: Int) -> Self {
+        allCases.last(where: { $0.isUnlocked(totalXP: totalXP) }) ?? .flora
+    }
+    public static func nextUnlock(totalXP: Int) -> Self? {
+        allCases.first(where: { !$0.isUnlocked(totalXP: totalXP) })
+    }
+    public var id: String { rawValue }
+    public var name: String { rawValue.capitalized }
+    public var element: String {
+        switch self {
+        case .bloom: return "Dragon flame"
+        case .stella: return "Solar radiance"
+        case .flora: return "Enchanted garden"
+        case .musa: return "Midnight melody"
+        case .tecna: return "Prismatic intelligence"
+        case .aisha: return "Tidal energy"
+        }
+    }
+    public var symbol: String {
+        switch self {
+        case .bloom: return "flame"
+        case .stella: return "sun.max"
+        case .flora: return "leaf"
+        case .musa: return "waveform"
+        case .tecna: return "cpu"
+        case .aisha: return "drop"
+        }
+    }
+    public var accent: String {
+        switch self {
+        case .bloom: return "#EF927A"
+        case .stella: return "#E9BD78"
+        case .flora: return "#E6A6C3"
+        case .musa: return "#EF91AD"
+        case .tecna: return "#B8A2F0"
+        case .aisha: return "#76CDBE"
+        }
+    }
+    public var secondary: String {
+        switch self {
+        case .bloom: return "#8FADF0"
+        case .stella: return "#D58DBA"
+        case .flora: return "#93BCA0"
+        case .musa: return "#9D9AEF"
+        case .tecna: return "#7DC8BE"
+        case .aisha: return "#9FAAE9"
+        }
+    }
+    public var light: String {
+        switch self {
+        case .bloom: return "#F5C5AC"
+        case .stella: return "#F4DDAB"
+        case .flora: return "#D9E6C5"
+        case .musa: return "#E6C9E9"
+        case .tecna: return "#D6C9FA"
+        case .aisha: return "#BDE8E0"
+        }
+    }
+    public var background: String {
+        switch self {
+        case .bloom: return "#131B2D"
+        case .stella: return "#251B26"
+        case .flora: return "#15191B"
+        case .musa: return "#1D1428"
+        case .tecna: return "#131A28"
+        case .aisha: return "#101C22"
+        }
+    }
+    public var surface: String {
+        switch self {
+        case .bloom: return "#202F49"
+        case .stella: return "#3A2C3B"
+        case .flora: return "#252B2B"
+        case .musa: return "#34233F"
+        case .tecna: return "#242D43"
+        case .aisha: return "#1C3037"
+        }
+    }
+}
+

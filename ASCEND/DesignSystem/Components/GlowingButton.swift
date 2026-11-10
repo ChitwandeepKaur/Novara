@@ -31,13 +31,13 @@ public struct GlowingButton: View {
                 Text(title)
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
             }
-            .foregroundColor(.white)
+            .foregroundColor(AscendTheme.backgroundDark)
             .padding(.vertical, 12)
             .padding(.horizontal, 20)
             .background(
                 RoundedRectangle(cornerRadius: 12, style: .continuous)
                     .fill(gradient)
-                    .shadow(color: AscendTheme.electricBlue.opacity(0.35), radius: 10, x: 0, y: 4)
+                    .shadow(color: AscendTheme.electricBlue.opacity(0.16), radius: 10, x: 0, y: 4)
             )
         }
         .buttonStyle(.plain)
